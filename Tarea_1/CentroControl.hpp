@@ -37,7 +37,7 @@ class CentroControl{
         void gestion_transmisiones();
         void control_energetico();
         void reportes();
-        Satelite* get_satelite(std::string codigo);
+        Satelite* buscar_satelite(std::string codigo);
         
 
 };

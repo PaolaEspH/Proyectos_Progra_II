@@ -12,13 +12,17 @@ class Orbita{
         std::string codigo;
         std::string nombre;
         double altitud;
-        Satelite* arr;
+        Satelite* satelites_asignados[MAX_SATELITES];
+
 
     public:
-        Orbita(std::string codigo, std::string nombre, double altitud, Satelite* satelites);
+        Orbita(std::string codigo, std::string nombre, double altitud);
         std::string get_codigo() const;
         std::string get_nombre() const;
         double get_altitud() const;
+        void asignar_satelite(Satelite* satelite);
+        Satelite* get_satelites_asignados() const;
+        int numero_satelites_asignados_a_orbita() const;
 };
 
 #endif

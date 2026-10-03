@@ -23,6 +23,8 @@ CentroControl::CentroControl(){
     }
 }
 
+//Satélites
+
 void CentroControl::registrar_satelite(){
     std::string cod;
     std::string nombre;
@@ -154,7 +156,7 @@ double CentroControl::leer_double_min_max(std::string msj, double min, double ma
     return num;
 }
 
-Satelite* CentroControl::get_satelite(std::string codigo){
+Satelite* CentroControl::buscar_satelite(std::string codigo){
     for(int i = 0; i < numero_satelites(); i++){
         if(codigo == satelites[i]->get_codigo()){
             return satelites[i];
@@ -235,7 +237,7 @@ void CentroControl::gestion_satelites(){
             do{
                 std::cout << "Ingrese el código del satélite: ";
             }while(!(std::cin >> codigo));
-            Satelite* satelite = get_satelite(codigo);
+            Satelite* satelite = buscar_satelite(codigo);
             if(satelite == nullptr){
                 std::cout << "Satélite no encontrado" << std::endl;
                 return;
@@ -251,3 +253,77 @@ void CentroControl::gestion_satelites(){
     }
 }
 
+//Órbitas
+
+void CentroControl::gestion_orbitas(){
+    int opcion;
+    do{
+        if(std::cin.fail()){
+            std::cin.clear();
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+        }
+        std::cout << "==== GESTIÓN DE ÓRBITAS ====" << std::endl <<
+        "1. Registrar órbita" << std::endl <<
+        "2. Buscar órbita" << std::endl <<
+        "3. Asignar satélite a órbita" << std::endl <<
+        "4. Listar satélites por órbita" << std::endl <<
+        "Seleccione una opción: ";
+    } while(!(std::cin >> opcion) || (opcion < 0) || (opcion > 2));
+    switch (opcion){
+        case 1:
+            registrar_orbita();
+            break;
+        case 2:
+            buscar_orbita()->mostrar_orbita();
+            break;
+        case 3:
+            asignar_satelite_a_orbita();
+            break;
+        case 4:
+            listar_satelites_por_orbita();
+            break;
+        default:
+            return;
+    }
+}
+
+Orbita* CentroControl::buscar_orbita(){
+    std::string codigo;
+    do{
+        std::cout << "Ingrese el código de la órbita: ";
+    }while(!(std::cin >> codigo));
+    for(int i = 0; i < numero_orbitas(); i++){
+        if(codigo == orbitas[i]->get_codigo()){
+            return orbitas[i];
+        }
+    }
+    std::cout << "Órbita no encontrada" << std::endl;
+    return nullptr;
+}
+
+void CentroControl::asignar_satelite_a_orbita(){
+    Satelite* satelite = buscar_satelite();
+    if(satelite == nullptr){
+        std::cout << "Satélite no encontrado" << std::endl;
+        return;
+    }
+    Orbita* orbita = buscar_orbita();
+    if(orbita == nullptr){
+        std::cout << "Órbita no encontrada" << std::endl;
+        return;
+    }
+    satelite->set_orbita(orbita);
+    orbita->asignar_satelite(satelite);
+    std::cout << "Satélite asignado a órbita correctamente" << std::endl;
+}
+
+void CentroControl::listar_satelites_por_orbita(){
+    for (int i = 0; i < numero_orbitas(); i++){
+        std::cout << "Órbita: " << orbitas[i]->get_codigo() << std::endl;
+        std::cout << "Satélites en la órbita:" << std::endl;
+        for(int j = 0; j < orbitas[i]->numero_satelites_asignados_a_orbita(); j++){
+            std::cout << "------------------------" << std::endl;
+            orbitas[i]->get_satelites_asignados()[j]->mostrar_satelite();
+        }
+    }
+}

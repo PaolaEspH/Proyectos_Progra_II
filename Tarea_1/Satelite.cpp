@@ -142,3 +142,11 @@ void Satelite::mostrar_satelite(){
     estado_energetico();
     std::cout << std::endl;
 }
+
+void Satelite::set_orbita(Orbita* orbita){
+    if(this->orbita != nullptr){
+        std::cout << "El satélite ya está asignado a la órbita " << this->orbita->get_codigo() << std::endl;
+        return;
+    }
+    this->orbita = orbita;
+}
