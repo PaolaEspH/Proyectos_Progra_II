@@ -896,3 +896,155 @@ void CentroControl::control_energetico(){
         }
     }
 }
+
+void CentroControl::reportes(){
+    int opcion = -1;
+    while(opcion != 0){
+        std::cout << "Reportes" << std::endl;
+        std::cout << "1. Cantidad de satélites por tipo" << std::endl;
+        std::cout << "2. Satélites por órbita" << std::endl;
+        std::cout << "3. Velocidad y periodo orbital" << std::endl;
+        std::cout << "4. Promedio de batería" << std::endl;
+        std::cout << "5. Satélite con menor batería" << std::endl;
+        std::cout << "6. Datos transmitidos y energía consumida" << std::endl;
+        std::cout << "7. Historial de transmisiones" << std::endl;
+        std::cout << "8. Resumen de telemetría" << std::endl;
+        std::cout << "9. Matriz y enlaces activos" << std::endl;
+        std::cout << "0. Regresar" << std::endl;
+        std::cout << "Opción: ";
+        if(!(std::cin >> opcion)){
+            std::cout << "Opción inválida" << std::endl;
+            return;
+        }
+        if(opcion == 0){
+            return;
+        }
+        switch(opcion){
+            case 1:{
+                int comunicacion = 0;
+                int meteorologicos = 0;
+                for(int i = 0; i < MAX_SATELITES; i++){
+                    if(satelites[i] != nullptr){
+                        if(satelites[i]->get_tipo() == 1){
+                            comunicacion++;
+                        }
+                        else if(satelites[i]->get_tipo() == 2){
+                            meteorologicos++;
+                        }
+                    }
+                }
+                std::cout << "Satélites registrados: " << comunicacion + meteorologicos << std::endl;
+                std::cout << "Comunicación: " << comunicacion << std::endl;
+                std::cout << "Meteorológicos: " << meteorologicos << std::endl;
+                break;
+            }
+            case 2:
+                listar_satelites_por_orbita();
+                break;
+            case 3:{
+                if(numero_satelites() == 0){
+                    std::cout << "No hay satélites registrados" << std::endl;
+                    break;
+                }
+                for(int i = 0; i < MAX_SATELITES; i++){
+                    if(satelites[i] != nullptr){
+                        std::cout << "Satélite: " << satelites[i]->get_codigo() << std::endl;
+                        std::cout << "Velocidad: " << satelites[i]->velocidad_orbital() << " km/s" << std::endl;
+                        std::cout << "Periodo: " << satelites[i]->periodo_orbital() << " s" << std::endl;
+                        std::cout << "Periodo en minutos: " << satelites[i]->periodo_orbital_minutos() << " min" << std::endl;
+                    }
+                }
+                break;
+            }
+            case 4:{
+                double suma = 0;
+                int cantidad = 0;
+                for(int i = 0; i < MAX_SATELITES; i++){
+                    if(satelites[i] != nullptr){
+                        suma = suma + satelites[i]->get_bateria();
+                        cantidad++;
+                    }
+                }
+                if(cantidad == 0){
+                    std::cout << "No hay satélites para calcular el promedio" << std::endl;
+                }
+                else{
+                    std::cout << "Promedio de batería de la red: " << suma / MAX_SATELITES << "%" << std::endl;
+                }
+                break;
+            }
+            case 5:{
+                Satelite* menor = nullptr;
+                for(int i = 0; i < MAX_SATELITES; i++){
+                    if(satelites[i] != nullptr){
+                        if(menor == nullptr){
+                            menor = satelites[i];
+                        }
+                        else if(satelites[i]->get_bateria() < menor->get_bateria()){
+                            menor = satelites[i];
+                        }
+                    }
+                }
+                if(menor == nullptr){
+                    std::cout << "No hay satélites registrados" << std::endl;
+                }
+                else{
+                    std::cout << "Satélite con menor batería:" << std::endl;
+                    menor->mostrar_resumen();
+                }
+                break;
+            }
+            case 6:{
+                double datos = 0;
+                double energia = 0;
+                int cantidad = 0;
+                for(int i = 0; i < MAX_TRANSMISIONES; i++){
+                    if(transmisiones[i] != nullptr){
+                        datos = transmisiones[i]->get_datos();
+                        energia = energia + transmisiones[i]->get_energia();
+                        cantidad++;
+                    }
+                }
+                std::cout << "Transmisiones registradas: " << cantidad << std::endl;
+                std::cout << "Datos transmitidos: " << datos << " MB" << std::endl;
+                std::cout << "Energía consumida: " << energia << " Wh" << std::endl;
+                break;
+            }
+            case 7:{
+                int cantidad = 0;
+                for(int i = 0; i < MAX_TRANSMISIONES; i++){
+                    if(transmisiones[i] != nullptr){
+                        cantidad++;
+                        std::cout << "Transmisión " << cantidad << std::endl;
+                        transmisiones[i]->mostrar_transmision();
+                    }
+                }
+                if(cantidad == 0){
+                    std::cout << "No hay transmisiones registradas" << std::endl;
+                }
+                break;
+            }
+            case 8:{
+                if(numero_satelites() == 0){
+                    std::cout << "No hay satélites registrados" << std::endl;
+                    break;
+                }
+                for(int i = 0; i < MAX_SATELITES; i++){
+                    if(satelites[i] != nullptr){
+                        std::cout << "Satélite: " << satelites[i]->get_codigo() << std::endl;
+                        std::cout << "Muestras: " << satelites[i]->get_cantidad_muestras() << " de 12" << std::endl;
+                        satelites[i]->mostrar_estadisticas();
+                    }
+                }
+                break;
+            }
+            case 9:
+                mostrar_matriz_enlaces();
+                mostrar_enlaces_activos();
+                break;
+            default:
+                std::cout << "Opción inválida" << std::endl;
+                break;
+        }
+    }
+}
