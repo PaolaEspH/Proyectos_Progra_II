@@ -25,6 +25,7 @@ class CentroControl{
         double leer_double_min_max(std::string msj, double min, double max);
         public:
         CentroControl();
+        ~CentroControl();
         void gestion_satelites();
         void registrar_satelite();
         void listar_satelites();
@@ -38,6 +39,9 @@ class CentroControl{
         void control_energetico();
         void reportes();
         Satelite* buscar_satelite(std::string codigo);
+        Orbita* buscar_orbita(std::string codigo);
+        void asignar_satelite_a_orbita();
+        void listar_satelites_por_orbita();
         
 
 };
