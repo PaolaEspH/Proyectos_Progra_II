@@ -1000,7 +1000,7 @@ void CentroControl::reportes(){
                 int cantidad = 0;
                 for(int i = 0; i < MAX_TRANSMISIONES; i++){
                     if(transmisiones[i] != nullptr){
-                        datos = transmisiones[i]->get_datos();
+                        datos = datos + transmisiones[i]->get_datos();
                         energia = energia + transmisiones[i]->get_energia();
                         cantidad++;
                     }
