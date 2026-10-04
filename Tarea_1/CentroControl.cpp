@@ -176,6 +176,35 @@ double CentroControl::leer_double(std::string msj){
     return num;
 }
 
+//Lee una linea completa para aceptar nombres y ubicaciones con espacios
+std::string CentroControl::leer_nombre(std::string msj){
+    std::string texto;
+    std::cout << msj << ": ";
+    //La primera lectura se come el fin de linea que dejo pendiente el >> anterior
+    while(std::getline(std::cin, texto)){
+        if(!texto.empty()){
+            return texto;
+        }
+    }
+    return "";
+}
+
+std::string CentroControl::leer_codigo(std::string msj){
+    std::string codigo;
+    do{
+        if(std::cin.fail()){
+            if(std::cin.eof()){
+                return "";
+            }
+            std::cin.clear();
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+        }
+        std::cout << msj << ": ";
+    }while(!(std::cin >> codigo));
+    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+    return codigo;
+}
+
 double CentroControl::leer_double_min_max(std::string msj, double min, double max){
     double num;
     do{
