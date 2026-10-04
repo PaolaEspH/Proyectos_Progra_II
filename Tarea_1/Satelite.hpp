@@ -27,7 +27,15 @@ class Satelite{
         double get_ancho_banda() const;
         double get_resolucion() const;
         double get_cobertura() const;
-        void mostrar_satelite();
+        std::string get_estado() const;
+        double energia_disponible() const;
+        bool reducir_bateria(double energia);
+        double radio_orbital() const;
+        double velocidad_orbital() const;
+        double periodo_orbital() const;
+        double periodo_orbital_minutos() const;
+        void mostrar_resumen() const;
+        void mostrar_satelite() const;
         Orbita* get_orbita() const;
         bool set_orbita(Orbita* orbita);
     private:
@@ -41,14 +49,10 @@ class Satelite{
         double ancho_banda;
         double resolucion;
         double cobertura;
-        double historialBateria[12]; 
-        double historialTemperatura[12]; 
+        double historialBateria[MAX_MUESTRAS]; 
+        double historialTemperatura[MAX_MUESTRAS]; 
         int cantidadMuestras;
         double bateria;
-        void estado_energetico();
-        double radio_orbital();
-        double velocidad_orbital();
-        double periodo_orbital();
         Orbita* orbita;
     };
 
