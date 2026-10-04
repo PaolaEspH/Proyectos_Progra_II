@@ -13,7 +13,7 @@ class CentroControl{
         Orbita* orbitas[MAX_ORBITAS];
         EstacionTerrestre* estaciones[MAX_ESTACIONES];
         Transmision* transmisiones[MAX_TRANSMISIONES];
-        bool enlaces[MAX_SATELITES][MAX_ESTACIONES]; //filas son satélites, columnas estaciones
+        int enlaces[MAX_SATELITES][MAX_ESTACIONES]; //filas son satélites, columnas estaciones (1 = enlace, 0 = sin enlace)
         int numero_satelites();
         int numero_orbitas();
         int numero_estaciones();
@@ -23,6 +23,9 @@ class CentroControl{
         std::string verificar_codigo_orbita();
         std::string verificar_codigo_estacion();
         double leer_double_min_max(std::string msj, double min, double max);
+        std::string leer_nombre(std::string msj);
+        std::string leer_codigo(std::string msj);
+        void realizar_transmision(Satelite* satelite, EstacionTerrestre* estacion);
         public:
         CentroControl();
         ~CentroControl();
@@ -35,9 +38,11 @@ class CentroControl{
         void mostrar_matriz_enlaces();
         void registrar_estacion();
         void registrar_enlace();
+        void eliminar_enlace();
+        void mostrar_satelites_de_estacion();
+        void mostrar_enlaces_activos();
         void telemetria();
         void gestion_transmisiones();
-        void realizar_transmision(Satelite* satelite, EstacionTerrestre* estacion);
         int indice_satelite(std::string codigo);
         int indice_estacion(std::string codigo);
         void control_energetico();
