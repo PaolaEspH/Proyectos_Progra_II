@@ -136,7 +136,7 @@ double Satelite::energia_disponible() const{
 
 //Fórmula (g): ΔB = (E/C)*100. No deja la batería por debajo de 0%
 bool Satelite::reducir_bateria(double energia){
-    if(capacidad <= 0){
+    if(capacidad <= 0 || energia < 0){
         return false;
     }
     double reduccion = (energia/capacidad)*100;

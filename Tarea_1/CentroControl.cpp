@@ -709,14 +709,16 @@ void CentroControl::realizar_transmision(Satelite* satelite, EstacionTerrestre* 
     }
     double datos = leer_double("Datos a transmitir (MB)");
     //El ancho de banda y la potencia no pueden pasar del máximo del satélite
-    double ancho_banda;
-    if(satelite->get_ancho_banda() > 0){
-        ancho_banda = leer_double_min_max("Ancho de banda (MB/s)", 0.01, satelite->get_ancho_banda());
+    double ancho_banda = leer_double("Ancho de banda (MB/s)");
+    if(ancho_banda <= 0 || (satelite->get_ancho_banda() > 0 && ancho_banda > satelite->get_ancho_banda())){
+        std::cout << "El ancho de banda debe ser positivo y no superar el máximo del satélite" << std::endl;
+        return;
     }
-    else{
-        ancho_banda = leer_double("Ancho de banda (MB/s)");
+    double potencia = leer_double("Potencia utilizada (W)");
+    if(potencia <= 0 || potencia > satelite->get_potencia()){
+        std::cout << "La potencia debe ser positiva y no superar el máximo del satélite" << std::endl;
+        return;
     }
-    double potencia = leer_double_min_max("Potencia utilizada (W)", 0.01, satelite->get_potencia());
 
     Transmision* transmision = new Transmision(satelite, estacion, datos, ancho_banda, potencia);
     double bateria_anterior = satelite->get_bateria();
