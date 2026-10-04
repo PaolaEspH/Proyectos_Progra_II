@@ -38,6 +38,10 @@ class Satelite{
         void mostrar_satelite() const;
         Orbita* get_orbita() const;
         bool set_orbita(Orbita* orbita);
+        bool registrar_muestra(double bateria_medida, double temperatura);
+        int get_cantidad_muestras();
+        void mostrar_historial();
+        void mostrar_estadisticas();
     private:
         std::string codigo;
         std::string nombre;

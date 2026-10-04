@@ -196,3 +196,69 @@ bool Satelite::set_orbita(Orbita* orbita){
     this->orbita = orbita;
     return true;
 }
+
+bool Satelite::registrar_muestra(double bateria_medida, double temperatura){
+    if(cantidadMuestras >= MAX_MUESTRAS){
+        return false;
+    }
+    if(bateria_medida < 0 || bateria_medida > 100){
+        return false;
+    }
+    historialBateria[cantidadMuestras] = bateria_medida;
+    historialTemperatura[cantidadMuestras] = temperatura;
+    cantidadMuestras++;
+    return true;
+}
+
+int Satelite::get_cantidad_muestras(){
+    return cantidadMuestras;
+}
+
+void Satelite::mostrar_historial(){
+    if(cantidadMuestras == 0){
+        std::cout << "No hay muestras registradas" << std::endl;
+        return;
+    }
+    for(int i = 0; i < cantidadMuestras; i++){
+        std::cout << "Muestra " << i + 1 << std::endl;
+        std::cout << "Batería: " << historialBateria[i] << "%" << std::endl;
+        std::cout << "Temperatura: " << historialTemperatura[i] << " °C" << std::endl;
+    }
+}
+
+void Satelite::mostrar_estadisticas(){
+    if(cantidadMuestras == 0){
+        std::cout << "No hay muestras para calcular estadísticas" << std::endl;
+        return;
+    }
+    double suma_bateria = 0;
+    double suma_temperatura = 0;
+    // se usa la primera muestra para empezar
+    double minima_bateria = historialBateria[0];
+    double maxima_bateria = historialBateria[0];
+    double minima_temperatura = historialTemperatura[0];
+    double maxima_temperatura = historialTemperatura[0];
+
+    for(int i = 0; i < cantidadMuestras; i++){
+        suma_bateria = suma_bateria + historialBateria[i];
+        suma_temperatura = suma_temperatura + historialTemperatura[i];
+        if(historialBateria[i] < minima_bateria){
+            minima_bateria = historialBateria[i];
+        }
+        if(historialBateria[i] > maxima_bateria){
+            maxima_bateria = historialBateria[i];
+        }
+        if(historialTemperatura[i] < minima_temperatura){
+            minima_temperatura = historialTemperatura[i];
+        }
+        if(historialTemperatura[i] > maxima_temperatura){
+            maxima_temperatura = historialTemperatura[i];
+        }
+    }
+    std::cout << "Promedio de batería: " << suma_bateria / cantidadMuestras << "%" << std::endl;
+    std::cout << "Mínimo de batería: " << minima_bateria << "%" << std::endl;
+    std::cout << "Máximo de batería: " << maxima_bateria << "%" << std::endl;
+    std::cout << "Promedio de temperatura: " << suma_temperatura / cantidadMuestras << " °C" << std::endl;
+    std::cout << "Mínimo de temperatura: " << minima_temperatura << " °C" << std::endl;
+    std::cout << "Máximo de temperatura: " << maxima_temperatura << " °C" << std::endl;
+}

@@ -744,5 +744,70 @@ void CentroControl::realizar_transmision(Satelite* satelite, EstacionTerrestre* 
     std::cout << "Transmisión registrada correctamente" << std::endl;
 }
 
+void CentroControl::telemetria(){
+    if(numero_satelites() == 0){
+        std::cout << "No hay satélites registrados" << std::endl;
+        return;
+    }
+    int opcion = -1;
+    while(opcion != 0){
+        std::cout << "Telemetría" << std::endl;
+        std::cout << "1. Registrar muestra" << std::endl;
+        std::cout << "2. Mostrar historial" << std::endl;
+        std::cout << "3. Mostrar estadísticas" << std::endl;
+        std::cout << "0. Regresar" << std::endl;
+        std::cout << "Opción: ";
+        if(!(std::cin >> opcion)){
+            std::cout << "Opción inválida" << std::endl;
+            return;
+        }
+        if(opcion == 0){
+            return;
+        }
+        if(opcion < 1 || opcion > 3){
+            std::cout << "Opción inválida" << std::endl;
+            continue;
+        }
+        std::string codigo;
+        std::cout << "Código del satélite: ";
+        if(!(std::cin >> codigo)){
+            return;
+        }
+        Satelite* satelite = buscar_satelite(codigo);
+        if(satelite == nullptr){
+            std::cout << "Satélite no encontrado" << std::endl;
+            continue;
+        }
+        if(opcion == 1){
+            if(satelite->get_cantidad_muestras() >= MAX_MUESTRAS){
+                std::cout << "El historial está lleno, máximo 12 muestras" << std::endl;
+                continue;
+            }
+            double bateria_medida;
+            double temperatura;
+            std::cout << "Batería medida (%): ";
+            if(!(std::cin >> bateria_medida)){
+                std::cout << "Dato inválido" << std::endl;
+                return;
+            }
+            std::cout << "Temperatura (°C): ";
+            if(!(std::cin >> temperatura)){
+                std::cout << "Dato inválido" << std::endl;
+                return;
+            }
+            if(satelite->registrar_muestra(bateria_medida, temperatura)){
+                std::cout << "Muestra guardada" << std::endl;
+                std::cout << "Muestras: " << satelite->get_cantidad_muestras() << " de 12" << std::endl;
+            }
+            else{
+                std::cout << "La batería debe estar entre 0 y 100" << std::endl;
+            }
+        }
+        else if(opcion == 2){
+            satelite->mostrar_historial();
+        }
+        else{
+            satelite->mostrar_estadisticas();
+        }
+    }
 }
-
