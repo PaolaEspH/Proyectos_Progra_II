@@ -31,7 +31,8 @@ class CentroControl{
         void listar_satelites();
         void gestion_orbitas();
         void registrar_orbita();
-        void estaciones_y_enlaces();
+        void gestion_estaciones_y_enlaces();
+        void mostrar_matriz_enlaces();
         void registrar_estacion();
         void registrar_enlace();
         void telemetria();
@@ -40,6 +41,7 @@ class CentroControl{
         void reportes();
         Satelite* buscar_satelite(std::string codigo);
         Orbita* buscar_orbita(std::string codigo);
+        EstacionTerrestre* buscar_estacion(std::string codigo);
         void asignar_satelite_a_orbita();
         void listar_satelites_por_orbita();
         

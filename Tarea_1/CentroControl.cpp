@@ -374,3 +374,149 @@ void CentroControl::listar_satelites_por_orbita(){
         orbitas[i]->mostrar_satelites();
     }
 }
+
+//Estaciones y enlaces
+
+void CentroControl::gestion_estaciones_y_enlaces(){
+    int opcion;
+    do{
+        if(std::cin.fail()){
+            std::cin.clear();
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+        }
+        std::cout << "==== ESTACIONES Y ENLACES ====" << std::endl <<
+        "1. Registrar estación" << std::endl <<
+        "2. Crear enlace" << std::endl <<
+        "3. Mostrar matriz de enlaces" << std::endl <<
+        "0. Regresar al menú principal" << std::endl <<
+        "Seleccione una opción: ";
+    } while(!(std::cin >> opcion) || (opcion < 0) || (opcion > 3));
+    switch (opcion){
+        case 1:
+            registrar_estacion();
+            break;
+        case 2:
+            registrar_enlace();
+            break;
+        case 3:
+            mostrar_matriz_enlaces();
+            break;
+        default:
+            return;
+    }
+}
+
+int CentroControl::numero_estaciones(){
+    int count = 0;
+    for(int i = 0; i < MAX_ESTACIONES; i++){
+        if(estaciones[i] != nullptr){
+            count++;
+        }
+    }
+    return count;
+}
+
+std::string CentroControl::verificar_codigo_estacion(){
+    std::string cod;
+    bool repetido;
+    do{
+        std::cout << "Código: ";
+        std::cin >> cod;
+        repetido = false;
+        for(int i = 0; i < numero_estaciones(); i++){
+            if(cod == estaciones[i]->get_codigo()){
+                std::cout << "Código ya registrado, ingrese otro" << std::endl;
+                repetido = true;
+                break;
+            }
+        }
+    }while(repetido);
+    return cod;
+}
+
+void CentroControl::registrar_estacion(){
+    std::string cod;
+    std::string nombre;
+    double latitud;
+    double longitud;
+    if(numero_estaciones() >= MAX_ESTACIONES){
+        std::cout << "No se pueden registrar más estaciones" << std::endl;
+        return;
+    }
+    cod = verificar_codigo_estacion();
+    std::cout << "Nombre: ";
+    std::cin >> nombre;
+    latitud = leer_double_min_max("Latitud (°)", -90, 90);
+    longitud = leer_double_min_max("Longitud (°)", -180, 180);
+
+    estaciones[numero_estaciones()] = new EstacionTerrestre(cod, nombre, latitud, longitud);
+    std::cout << "Estación registrada correctamente" << std::endl;
+}
+
+void CentroControl::mostrar_matriz_enlaces(){
+    std::cout << "Matriz de enlaces:" << std::endl;
+    std::cout << "Satélites/Estaciones" << std::endl;
+    std::cout << "      ";
+    // Mostrar estaciones en la primera fila
+    for(int i = 0; i < numero_estaciones(); i++){
+        std::cout << estaciones[i]->get_codigo() << " ";
+    }
+    std::cout << std::endl;
+    for(int i = 0; i < numero_satelites(); i++){
+        // Mostrar satélite en la primera columna
+        std::cout << satelites[i]->get_codigo() << " ";
+        for(int j = 0; j < numero_estaciones(); j++){
+            std::cout << enlaces[i][j] << "      ";
+        }
+        std::cout << std::endl;
+    }
+}
+
+EstacionTerrestre* CentroControl::buscar_estacion(std::string codigo){
+    for(int i = 0; i < numero_estaciones(); i++){
+        if(codigo == estaciones[i]->get_codigo()){
+            return estaciones[i];
+        }
+    }
+    return nullptr;
+}
+
+void CentroControl::registrar_enlace(){
+    std::string cod_satelite;
+    std::string cod_estacion;
+    do{
+        std::cout << "Ingrese el código del satélite: ";
+    }while(!(std::cin >> cod_satelite));
+    Satelite* satelite = buscar_satelite(cod_satelite);
+    if(satelite == nullptr){
+        std::cout << "Satélite no encontrado" << std::endl;
+        return;
+    }
+    do{
+        std::cout << "Ingrese el código de la estación: ";
+    }while(!(std::cin >> cod_estacion));
+    EstacionTerrestre* estacion = buscar_estacion(cod_estacion);
+    if(estacion == nullptr){
+        std::cout << "Estación no encontrada" << std::endl;
+        return;
+    }
+    // Buscar índices del satélite y la estación
+    int index_satelite = -1;
+    int index_estacion = -1;
+    for(int i = 0; i < numero_satelites(); i++){
+        if(satelites[i] == satelite){
+            index_satelite = i;
+            break;
+        }
+    }
+    for(int j = 0; j < numero_estaciones(); j++){
+        if(estaciones[j] == estacion){
+            index_estacion = j;
+            break;
+        }
+    }
+    if(index_satelite != -1 && index_estacion != -1){
+        enlaces[index_satelite][index_estacion] = true;
+        std::cout << "Enlace registrado correctamente" << std::endl;
+    }
+}
