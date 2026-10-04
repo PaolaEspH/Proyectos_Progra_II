@@ -37,6 +37,9 @@ class CentroControl{
         void registrar_enlace();
         void telemetria();
         void gestion_transmisiones();
+        void realizar_transmision(Satelite* satelite, EstacionTerrestre* estacion);
+        int indice_satelite(std::string codigo);
+        int indice_estacion(std::string codigo);
         void control_energetico();
         void reportes();
         Satelite* buscar_satelite(std::string codigo);

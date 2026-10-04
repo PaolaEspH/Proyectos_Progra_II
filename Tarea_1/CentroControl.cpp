@@ -520,3 +520,58 @@ void CentroControl::registrar_enlace(){
         std::cout << "Enlace registrado correctamente" << std::endl;
     }
 }
+
+void CentroControl::gestion_transmisiones(){
+    std::string cod_satelite = verificar_codigo_satelite();
+    std::string cod_estacion = verificar_codigo_estacion();
+    // Buscar índices del satélite y la estación
+    int index_satelite = indice_satelite(cod_satelite);
+    int index_estacion = indice_estacion(cod_estacion);
+    if(enlaces[index_satelite][index_estacion]){
+        realizar_transmision(satelites[index_satelite], estaciones[index_estacion]);
+    } else {
+        std::cout << "No hay enlace entre el satélite " << cod_satelite
+                  << " y la estación " << cod_estacion << std::endl;
+    }
+}
+
+void CentroControl::realizar_transmision(Satelite* satelite, EstacionTerrestre* estacion){
+    if(numero_transmisiones() >= MAX_TRANSMISIONES){
+        std::cout << "No se pueden registrar más transmisiones" << std::endl;
+        return;
+    }
+    double datos = leer_double("Datos a transmitir (MB)");
+    double ancho_banda = leer_double("Ancho de banda (MB/s)");
+    double potencia = leer_double("Potencia utilizada (W)");
+    double duracion = leer_double("Duración (s)");
+    std::cout << "Enlace de la matriz: ACTIVO" << std::endl;
+    if(satelite->get_bateria() < reduccion_bateria(datos, ancho_banda, duracion)){
+        std::cout << "Batería insuficiente para la transmisión" << std::endl;
+        return;
+    }
+    std::cout << "Energía consumida: " << satelite->energia_consumida() << " Wh" << std::endl;
+    std::cout << "Batería anterior: " << satelite->get_bateria() << " %" << std::endl;
+    satelite->actualizar_bateria(datos, ancho_banda, duracion);
+    std::cout << "Batería actual: " << satelite->get_bateria() << " %" << std::endl;
+    std::cout << "Estado:" << satelite->estado() << std::endl;
+    transmisiones[numero_transmisiones()] = new Transmision(ancho_banda, potencia, duracion, satelite->energia_consumida(), duracion);
+    std::cout << "Transmisión registrada correctamente" << std::endl;
+}
+
+int CentroControl::indice_satelite(std::string codigo){
+    for(int i = 0; i < numero_satelites(); i++){
+        if(satelites[i]->get_codigo() == codigo){
+            return i;
+        }
+    }
+    return -1;
+}
+
+int CentroControl::indice_estacion(std::string codigo){
+    for(int i = 0; i < numero_estaciones(); i++){
+        if(estaciones[i]->get_codigo() == codigo){
+            return i;
+        }
+    }
+    return -1;
+}
