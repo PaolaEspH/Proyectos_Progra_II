@@ -1,6 +1,7 @@
 #include <iostream>
 #include <cmath>
 #include "Satelite.hpp"
+#include "Orbita.hpp"
 
 Satelite::Satelite(std::string codigo, std::string nombre, 
     int tipo, double masa, double altitud, 
@@ -89,16 +90,12 @@ Orbita* Satelite::get_orbita() const{
     return orbita;
 }
 
-void Satelite::set_orbita(Orbita* orbita){
-    this->orbita = orbita;
-}
-
 double Satelite::radio_orbital(){
     return RT + altitud;
 }
 
 double Satelite::velocidad_orbital(){
-    return sqrt(mu/radio_orbital());
+    return sqrt(MU/radio_orbital());
 }
 
 double Satelite::periodo_orbital(){
@@ -137,16 +134,18 @@ void Satelite::mostrar_satelite(){
         std::cout << "Cobertura: " << cobertura << "%" << std::endl;
     }
     std::cout << "Velocidad orbital: " << velocidad_orbital() << " km/s" << std::endl;
-    std::cout << "Periodo orbital: " << periodo_orbital() << " s" << std::endl;
+    std::cout << "Periodo orbital: " << periodo_orbital() << " s ("
+              << periodo_orbital()/60 << " min)" << std::endl;
     std::cout << "Estado energético: ";
     estado_energetico();
     std::cout << std::endl;
 }
 
-void Satelite::set_orbita(Orbita* orbita){
+bool Satelite::set_orbita(Orbita* orbita){
     if(this->orbita != nullptr){
         std::cout << "El satélite ya está asignado a la órbita " << this->orbita->get_codigo() << std::endl;
-        return;
+        return false;
     }
     this->orbita = orbita;
+    return true;
 }

@@ -2,10 +2,6 @@
 #define SATELITE_HPP
 #include <string>
 #include "auxiliar.hpp"
-#include "Orbita.hpp"
-#include "EstacionTerrestre.hpp"
-#include "Transmision.hpp"
-#include "CentroControl.hpp"
 
 class Satelite{
     public:
@@ -33,7 +29,7 @@ class Satelite{
         double get_cobertura() const;
         void mostrar_satelite();
         Orbita* get_orbita() const;
-        void set_orbita(Orbita* orbita);
+        bool set_orbita(Orbita* orbita);
     private:
         std::string codigo;
         std::string nombre;
