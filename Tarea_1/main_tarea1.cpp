@@ -13,6 +13,10 @@ int main(){
     do{
         do{
             if(std::cin.fail()){
+                if(std::cin.eof()){
+                    opcion = 0;
+                    break;
+                }
                 std::cin.clear();
                 std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
             }
@@ -35,7 +39,7 @@ int main(){
                 centro.gestion_orbitas();
                 break;
             case 3:
-                centro.estaciones_y_enlaces();
+                centro.gestion_estaciones_y_enlaces();
                 break;
             case 4:
                 centro.telemetria();
