@@ -16,8 +16,9 @@ class Orbita{
         std::string get_codigo() const;
         std::string get_nombre() const;
         double get_altitud() const;
-        void asignar_satelite(Satelite* satelite);
+        bool asignar_satelite(Satelite* satelite);
         void mostrar_satelites();
+        bool tiene_satelite(Satelite* satelite) const;
         void mostrar_orbita();
         int numero_satelites_asignados_a_orbita() const;
 };
