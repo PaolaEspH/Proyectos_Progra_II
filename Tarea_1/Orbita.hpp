@@ -2,10 +2,6 @@
 #define ORBITA_HPP
 #include <string>
 #include "auxiliar.hpp"
-#include "Satelite.hpp"
-#include "EstacionTerrestre.hpp"
-#include "Transmision.hpp"
-#include "CentroControl.hpp"
 
 class Orbita{
     private:
@@ -21,7 +17,8 @@ class Orbita{
         std::string get_nombre() const;
         double get_altitud() const;
         void asignar_satelite(Satelite* satelite);
-        Satelite* get_satelites_asignados() const;
+        void mostrar_satelites();
+        void mostrar_orbita();
         int numero_satelites_asignados_a_orbita() const;
 };
 
