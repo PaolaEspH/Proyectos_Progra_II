@@ -839,7 +839,7 @@ void CentroControl::control_energetico(){
         if(opcion == 3){
             int cantidad = 0;
             for(int i = 0; i < MAX_SATELITES; i++){
-                if(satelites[i] != nullptr && satelites[i]->get_bateria() <= 20){
+                if(satelites[i] != nullptr && satelites[i]->get_bateria() < 20){
                     satelites[i]->mostrar_resumen();
                     cantidad++;
                 }
