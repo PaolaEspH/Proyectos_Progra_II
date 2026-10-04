@@ -969,7 +969,7 @@ void CentroControl::reportes(){
                     std::cout << "No hay satélites para calcular el promedio" << std::endl;
                 }
                 else{
-                    std::cout << "Promedio de batería de la red: " << suma / MAX_SATELITES << "%" << std::endl;
+                    std::cout << "Promedio de batería de la red: " << suma / cantidad << "%" << std::endl;
                 }
                 break;
             }
