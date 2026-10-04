@@ -270,7 +270,7 @@ bool Satelite::recargar_solar(double potencia_solar, double segundos, double efi
     if(eficiencia < 0 || eficiencia > 1){
         return false;
     }
-    double energia = potencia_solar * (segundos / 3600.0);
+    double energia = potencia_solar * (segundos / 3600.0) * eficiencia;
     double aumento = (energia / capacidad) * 100;
     bateria = bateria + aumento;
     if(bateria > 100){
