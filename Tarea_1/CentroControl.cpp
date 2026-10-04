@@ -58,9 +58,14 @@ void CentroControl::registrar_satelite(){
     }
     cod = verificar_codigo_satelite();
     nombre = leer_nombre("Nombre");
+    if(cod.empty() || nombre.empty()){
+        std::cout << "Registro incompleto, no se guardó el satélite" << std::endl;
+        return;
+    }
     do{
         if(std::cin.fail()){
             if(std::cin.eof()){
+                std::cout << "Registro incompleto, no se guardó el satélite" << std::endl;
                 return;
             }
             std::cin.clear();
@@ -75,13 +80,17 @@ void CentroControl::registrar_satelite(){
     bateria = leer_double_min_max("Bateria actual (%)", 0, 100);
     potencia = leer_double("Potencia de transmision (W)");
 
-    if(std::cin.eof()){
+    if(!std::cin){
         std::cout << "Registro incompleto, no se guardó el satélite" << std::endl;
         return;
     }
     if(tipo == 1){
         double ancho_banda;
         ancho_banda = leer_double("Ancho de banda (MB/s)");
+        if(!std::cin){
+            std::cout << "Registro incompleto, no se guardó el satélite" << std::endl;
+            return;
+        }
 
         satelites[numero_satelites()] = new Satelite(
             cod, nombre, tipo, masa, altitud,
@@ -95,6 +104,10 @@ void CentroControl::registrar_satelite(){
 
         resolucion = leer_double("Resolución del sensor (m)");
         cobertura = leer_double_min_max("Cobertura (%)", 0, 100);
+        if(!std::cin){
+            std::cout << "Registro incompleto, no se guardó el satélite" << std::endl;
+            return;
+        }
 
         satelites[numero_satelites()] = new Satelite(
             cod, nombre, tipo, masa, altitud, capacidad, 
@@ -108,7 +121,9 @@ std::string CentroControl::verificar_codigo_satelite(){
     bool repetido;
     do{
         std::cout << "Código: ";
-        std::cin >> cod;
+        if(!(std::cin >> cod)){
+            return "";
+        }
         std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
         repetido = false;
         for(int i = 0; i < numero_satelites(); i++){
@@ -127,7 +142,9 @@ std::string CentroControl::verificar_codigo_orbita(){
     bool repetido;
     do{
         std::cout << "Código: ";
-        std::cin >> cod;
+        if(!(std::cin >> cod)){
+            return "";
+        }
         std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
         repetido = false;
         for(int i = 0; i < numero_orbitas(); i++){
@@ -146,7 +163,9 @@ std::string CentroControl::verificar_codigo_estacion(){
     bool repetido;
     do{
         std::cout << "Código: ";
-        std::cin >> cod;
+        if(!(std::cin >> cod)){
+            return "";
+        }
         std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
         repetido = false;
         for(int i = 0; i < numero_estaciones(); i++){
@@ -383,6 +402,10 @@ void CentroControl::registrar_orbita(){
     cod = verificar_codigo_orbita();
     nombre = leer_nombre("Nombre");
     altitud = leer_double("Altitud de referencia (km)");
+    if(!std::cin || cod.empty() || nombre.empty()){
+        std::cout << "Registro incompleto, no se guardó la órbita" << std::endl;
+        return;
+    }
 
     orbitas[numero_orbitas()] = new Orbita(cod, nombre, altitud);
     std::cout << "Órbita registrada correctamente" << std::endl;
@@ -508,6 +531,10 @@ void CentroControl::registrar_estacion(){
     cod = verificar_codigo_estacion();
     nombre = leer_nombre("Nombre");
     ubicacion = leer_nombre("Ubicación");
+    if(!std::cin || cod.empty() || nombre.empty() || ubicacion.empty()){
+        std::cout << "Registro incompleto, no se guardó la estación" << std::endl;
+        return;
+    }
 
     estaciones[numero_estaciones()] = new EstacionTerrestre(cod, nombre, ubicacion);
     std::cout << "Estación registrada correctamente" << std::endl;
@@ -678,12 +705,20 @@ void CentroControl::gestion_transmisiones(){
     }
     std::cout << "--- Nueva transmisión ---" << std::endl;
     std::string cod_satelite = leer_codigo("Satélite");
+    if(cod_satelite.empty()){
+        std::cout << "Transmisión incompleta, no se guardó el envío" << std::endl;
+        return;
+    }
     int index_satelite = indice_satelite(cod_satelite);
     if(index_satelite == -1){
         std::cout << "Satélite no encontrado" << std::endl;
         return;
     }
     std::string cod_estacion = leer_codigo("Estación");
+    if(cod_estacion.empty()){
+        std::cout << "Transmisión incompleta, no se guardó el envío" << std::endl;
+        return;
+    }
     int index_estacion = indice_estacion(cod_estacion);
     if(index_estacion == -1){
         std::cout << "Estación no encontrada" << std::endl;
@@ -708,13 +743,25 @@ void CentroControl::realizar_transmision(Satelite* satelite, EstacionTerrestre* 
         return;
     }
     double datos = leer_double("Datos a transmitir (MB)");
+    if(!std::cin){
+        std::cout << "Transmisión incompleta, no se guardó el envío" << std::endl;
+        return;
+    }
     //El ancho de banda y la potencia no pueden pasar del máximo del satélite
     double ancho_banda = leer_double("Ancho de banda (MB/s)");
+    if(!std::cin){
+        std::cout << "Transmisión incompleta, no se guardó el envío" << std::endl;
+        return;
+    }
     if(ancho_banda <= 0 || (satelite->get_ancho_banda() > 0 && ancho_banda > satelite->get_ancho_banda())){
         std::cout << "El ancho de banda debe ser positivo y no superar el máximo del satélite" << std::endl;
         return;
     }
     double potencia = leer_double("Potencia utilizada (W)");
+    if(!std::cin){
+        std::cout << "Transmisión incompleta, no se guardó el envío" << std::endl;
+        return;
+    }
     if(potencia <= 0 || potencia > satelite->get_potencia()){
         std::cout << "La potencia debe ser positiva y no superar el máximo del satélite" << std::endl;
         return;
