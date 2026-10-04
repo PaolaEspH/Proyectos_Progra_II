@@ -262,3 +262,19 @@ void Satelite::mostrar_estadisticas(){
     std::cout << "Mínimo de temperatura: " << minima_temperatura << " °C" << std::endl;
     std::cout << "Máximo de temperatura: " << maxima_temperatura << " °C" << std::endl;
 }
+
+bool Satelite::recargar_solar(double potencia_solar, double segundos, double eficiencia){
+    if(capacidad <= 0 || potencia_solar <= 0 || segundos <= 0){
+        return false;
+    }
+    if(eficiencia < 0 || eficiencia > 1){
+        return false;
+    }
+    double energia = potencia_solar * (segundos / 3600.0);
+    double aumento = (energia / capacidad) * 100;
+    bateria = bateria + aumento;
+    if(bateria > 100){
+        bateria = 100;
+    }
+    return true;
+}

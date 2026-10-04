@@ -811,3 +811,88 @@ void CentroControl::telemetria(){
         }
     }
 }
+
+void CentroControl::control_energetico(){
+    if(numero_satelites() == 0){
+        std::cout << "No hay satélites registrados" << std::endl;
+        return;
+    }
+    int opcion = -1;
+    while(opcion != 0){
+        std::cout << "Control energético" << std::endl;
+        std::cout << "1. Consultar batería y estado" << std::endl;
+        std::cout << "2. Recarga solar" << std::endl;
+        std::cout << "3. Satélites críticos y fuera de servicio" << std::endl;
+        std::cout << "0. Regresar" << std::endl;
+        std::cout << "Opción: ";
+        if(!(std::cin >> opcion)){
+            std::cout << "Opción inválida" << std::endl;
+            return;
+        }
+        if(opcion == 0){
+            return;
+        }
+        if(opcion < 1 || opcion > 3){
+            std::cout << "Opción inválida" << std::endl;
+            continue;
+        }
+        if(opcion == 3){
+            int cantidad = 0;
+            for(int i = 0; i < MAX_SATELITES; i++){
+                if(satelites[i] != nullptr && satelites[i]->get_bateria() <= 20){
+                    satelites[i]->mostrar_resumen();
+                    cantidad++;
+                }
+            }
+            if(cantidad == 0){
+                std::cout << "No hay satélites críticos ni fuera de servicio" << std::endl;
+            }
+            continue;
+        }
+        std::string codigo;
+        std::cout << "Código del satélite: ";
+        if(!(std::cin >> codigo)){
+            return;
+        }
+        Satelite* satelite = buscar_satelite(codigo);
+        if(satelite == nullptr){
+            std::cout << "Satélite no encontrado" << std::endl;
+            continue;
+        }
+        if(opcion == 1){
+            std::cout << "Batería actual: " << satelite->get_bateria() << "%" << std::endl;
+            std::cout << "Estado: " << satelite->get_estado() << std::endl;
+            std::cout << "Energía disponible: " << satelite->energia_disponible() << " Wh" << std::endl;
+        }
+        else{
+            double potencia_solar;
+            double segundos;
+            double eficiencia;
+            std::cout << "Potencia solar (W): ";
+            if(!(std::cin >> potencia_solar)){
+                std::cout << "Dato inválido" << std::endl;
+                return;
+            }
+            std::cout << "Tiempo de recarga (s): ";
+            if(!(std::cin >> segundos)){
+                std::cout << "Dato inválido" << std::endl;
+                return;
+            }
+            std::cout << "Eficiencia (0 a 1): ";
+            if(!(std::cin >> eficiencia)){
+                std::cout << "Dato inválido" << std::endl;
+                return;
+            }
+            double bateria_anterior = satelite->get_bateria();
+            if(satelite->recargar_solar(potencia_solar, segundos, eficiencia)){
+                std::cout << "Recarga realizada" << std::endl;
+                std::cout << "Batería anterior: " << bateria_anterior << "%" << std::endl;
+                std::cout << "Batería actual: " << satelite->get_bateria() << "%" << std::endl;
+                std::cout << "Estado: " << satelite->get_estado() << std::endl;
+            }
+            else{
+                std::cout << "Potencia y tiempo deben ser positivos, eficiencia entre 0 y 1" << std::endl;
+            }
+        }
+    }
+}

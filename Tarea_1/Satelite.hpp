@@ -42,6 +42,7 @@ class Satelite{
         int get_cantidad_muestras();
         void mostrar_historial();
         void mostrar_estadisticas();
+        bool recargar_solar(double potencia_solar, double segundos, double eficiencia);
     private:
         std::string codigo;
         std::string nombre;
