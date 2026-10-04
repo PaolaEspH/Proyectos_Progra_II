@@ -2,10 +2,6 @@
 #define TRANSMISION_HPP
 #include <string>
 #include "auxiliar.hpp"
-#include "Satelite.hpp"
-#include "Orbita.hpp"
-#include "EstacionTerrestre.hpp"
-#include "CentroControl.hpp"
 
 class Transmision{
     private:

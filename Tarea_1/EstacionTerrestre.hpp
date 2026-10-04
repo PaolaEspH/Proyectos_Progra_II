@@ -2,10 +2,6 @@
 #define ESTACIONTERRESTRE_HPP
 #include <string>
 #include "auxiliar.hpp"
-#include "Satelite.hpp"
-#include "Orbita.hpp"
-#include "Transmision.hpp"
-#include "CentroControl.hpp"
 
 class EstacionTerrestre{
     private:
