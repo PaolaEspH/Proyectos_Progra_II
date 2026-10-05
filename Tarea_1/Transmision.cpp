@@ -74,15 +74,15 @@ double Transmision::get_tiempo() const{
 
 void Transmision::mostrar_transmision(){
     if((sateliteAsignado == nullptr) || (estacionDestino == nullptr)){
-        std::cout << "Transmisión incompleta" << std::endl;
+        std::cout << "Transmision incompleta" << std::endl;
         return;
     }
-    std::cout << "Satélite: " << sateliteAsignado->get_codigo()
-              << " -> Estación: " << estacionDestino->get_codigo() << std::endl;
+    std::cout << "Satelite: " << sateliteAsignado->get_codigo()
+              << " -> Estacion: " << estacionDestino->get_codigo() << std::endl;
     std::cout << "Datos transmitidos: " << datos << " MB" << std::endl;
     std::cout << "Ancho de banda: " << ancho_banda << " MB/s" << std::endl;
     std::cout << "Potencia utilizada: " << potencia << " W" << std::endl;
-    std::cout << "Duración: " << duracion << " s" << std::endl;
-    std::cout << "Tiempo de propagación: " << tiempo << " s" << std::endl;
-    std::cout << "Energía consumida: " << energia << " Wh" << std::endl;
+    std::cout << "Duracion: " << duracion << " s" << std::endl;
+    std::cout << "Tiempo de propagacion: " << tiempo << " s" << std::endl;
+    std::cout << "Energia consumida: " << energia << " Wh" << std::endl;
 }

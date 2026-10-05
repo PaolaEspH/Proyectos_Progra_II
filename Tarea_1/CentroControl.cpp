@@ -53,42 +53,42 @@ void CentroControl::registrar_satelite(){
     double bateria;
     double potencia;
     if (numero_satelites() >= MAX_SATELITES){
-        std::cout << "No se pueden registrar más satélites" << std::endl;
+        std::cout << "No se pueden registrar mas satelites" << std::endl;
         return;
     }
     cod = verificar_codigo_satelite();
     nombre = leer_nombre("Nombre");
     if(cod.empty() || nombre.empty()){
-        std::cout << "Registro incompleto, no se guardó el satélite" << std::endl;
+        std::cout << "Registro incompleto, no se guardo el satelite" << std::endl;
         return;
     }
     do{
         if(std::cin.fail()){
             if(std::cin.eof()){
-                std::cout << "Registro incompleto, no se guardó el satélite" << std::endl;
+                std::cout << "Registro incompleto, no se guardo el satelite" << std::endl;
                 return;
             }
             std::cin.clear();
             std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
         }
-        std::cout << "Tipo (1. Comunicación / 2. Meteorológico): ";
+        std::cout << "Tipo (1. Comunicacion / 2. Meteorologico): ";
     } while(!(std::cin >> tipo) || ((tipo != 1) && (tipo != 2)));
     std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
     masa = leer_double("Masa (kg)");
     altitud = leer_double("Altitud (km)");
-    capacidad = leer_double("Capacidad energética (Wh)");
+    capacidad = leer_double("Capacidad energetica (Wh)");
     bateria = leer_double_min_max("Bateria actual (%)", 0, 100);
     potencia = leer_double("Potencia de transmision (W)");
 
     if(!std::cin){
-        std::cout << "Registro incompleto, no se guardó el satélite" << std::endl;
+        std::cout << "Registro incompleto, no se guardo el satelite" << std::endl;
         return;
     }
     if(tipo == 1){
         double ancho_banda;
         ancho_banda = leer_double("Ancho de banda (MB/s)");
         if(!std::cin){
-            std::cout << "Registro incompleto, no se guardó el satélite" << std::endl;
+            std::cout << "Registro incompleto, no se guardo el satelite" << std::endl;
             return;
         }
 
@@ -102,10 +102,10 @@ void CentroControl::registrar_satelite(){
         double resolucion;
         double cobertura;
 
-        resolucion = leer_double("Resolución del sensor (m)");
+        resolucion = leer_double("Resolucion del sensor (m)");
         cobertura = leer_double_min_max("Cobertura (%)", 0, 100);
         if(!std::cin){
-            std::cout << "Registro incompleto, no se guardó el satélite" << std::endl;
+            std::cout << "Registro incompleto, no se guardo el satelite" << std::endl;
             return;
         }
 
@@ -113,14 +113,14 @@ void CentroControl::registrar_satelite(){
             cod, nombre, tipo, masa, altitud, capacidad, 
             bateria, potencia, resolucion, cobertura);
     }
-    std::cout << "Satélite registrado correctamente" << std::endl;
+    std::cout << "Satelite registrado correctamente" << std::endl;
 }
 
 std::string CentroControl::verificar_codigo_satelite(){
     std::string cod;
     bool repetido;
     do{
-        std::cout << "Código: ";
+        std::cout << "Codigo: ";
         if(!(std::cin >> cod)){
             return "";
         }
@@ -128,7 +128,7 @@ std::string CentroControl::verificar_codigo_satelite(){
         repetido = false;
         for(int i = 0; i < numero_satelites(); i++){
             if((satelites[i] != nullptr) && (cod == satelites[i]->get_codigo())){
-                std::cout << "Código ya registrado, ingrese otro" << std::endl;
+                std::cout << "Codigo ya registrado, ingrese otro" << std::endl;
                 repetido = true;
                 break;
             }
@@ -141,7 +141,7 @@ std::string CentroControl::verificar_codigo_orbita(){
     std::string cod;
     bool repetido;
     do{
-        std::cout << "Código: ";
+        std::cout << "Codigo: ";
         if(!(std::cin >> cod)){
             return "";
         }
@@ -149,7 +149,7 @@ std::string CentroControl::verificar_codigo_orbita(){
         repetido = false;
         for(int i = 0; i < numero_orbitas(); i++){
             if((orbitas[i] != nullptr) && (cod == orbitas[i]->get_codigo())){
-                std::cout << "Código ya registrado, ingrese otro" << std::endl;
+                std::cout << "Codigo ya registrado, ingrese otro" << std::endl;
                 repetido = true;
                 break;
             }
@@ -162,7 +162,7 @@ std::string CentroControl::verificar_codigo_estacion(){
     std::string cod;
     bool repetido;
     do{
-        std::cout << "Código: ";
+        std::cout << "Codigo: ";
         if(!(std::cin >> cod)){
             return "";
         }
@@ -170,7 +170,7 @@ std::string CentroControl::verificar_codigo_estacion(){
         repetido = false;
         for(int i = 0; i < numero_estaciones(); i++){
             if((estaciones[i] != nullptr) && (cod == estaciones[i]->get_codigo())){
-                std::cout << "Código ya registrado, ingrese otro" << std::endl;
+                std::cout << "Codigo ya registrado, ingrese otro" << std::endl;
                 repetido = true;
                 break;
             }
@@ -251,7 +251,7 @@ Satelite* CentroControl::buscar_satelite(std::string codigo){
 
 void CentroControl::listar_satelites(){
     if(numero_satelites() == 0){
-        std::cout << "No hay satélites registrados" << std::endl;
+        std::cout << "No hay satelites registrados" << std::endl;
         return;
     }
     for(int i = 0; i < numero_satelites(); i++){
@@ -312,22 +312,22 @@ void CentroControl::gestion_satelites(){
                 std::cin.clear();
                 std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
             }
-            std::cout << "==== GESTIÓN DE SATÉLITES ====" << std::endl <<
-            "1. Registrar satélite" << std::endl <<
-            "2. Buscar satélite" << std::endl <<
-            "3. Listar satélites" << std::endl <<
-            "0. Regresar al menú principal" << std::endl <<
-            "Seleccione una opción: ";
+            std::cout << "==== GESTION DE SATELITES ====" << std::endl <<
+            "1. Registrar satelite" << std::endl <<
+            "2. Buscar satelite" << std::endl <<
+            "3. Listar satelites" << std::endl <<
+            "0. Regresar al menu principal" << std::endl <<
+            "Seleccione una opcion: ";
         } while(!(std::cin >> opcion) || (opcion < 0) || (opcion > 3));
         switch (opcion){
             case 1:
                 registrar_satelite();
                 break;
             case 2:{
-                std::string codigo = leer_codigo("Ingrese el código del satélite");
+                std::string codigo = leer_codigo("Ingrese el codigo del satelite");
                 Satelite* satelite = buscar_satelite(codigo);
                 if(satelite == nullptr){
-                    std::cout << "Satélite no encontrado" << std::endl;
+                    std::cout << "Satelite no encontrado" << std::endl;
                     break;
                 }
                 satelite->mostrar_satelite();
@@ -340,7 +340,7 @@ void CentroControl::gestion_satelites(){
                 break;
         }
     }while(opcion != 0);
-    std::cout << "Regresando al menú principal..." << std::endl;
+    std::cout << "Regresando al menu principal..." << std::endl;
 }
 
 //Órbitas
@@ -356,23 +356,23 @@ void CentroControl::gestion_orbitas(){
                 std::cin.clear();
                 std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
             }
-            std::cout << "==== GESTIÓN DE ÓRBITAS ====" << std::endl <<
-            "1. Registrar órbita" << std::endl <<
-            "2. Buscar órbita" << std::endl <<
-            "3. Asignar satélite a órbita" << std::endl <<
-            "4. Listar satélites por órbita" << std::endl <<
-            "0. Regresar al menú principal" << std::endl <<
-            "Seleccione una opción: ";
+            std::cout << "==== GESTION DE ORBITAS ====" << std::endl <<
+            "1. Registrar orbita" << std::endl <<
+            "2. Buscar orbita" << std::endl <<
+            "3. Asignar satelite a orbita" << std::endl <<
+            "4. Listar satelites por orbita" << std::endl <<
+            "0. Regresar al menu principal" << std::endl <<
+            "Seleccione una opcion: ";
         } while(!(std::cin >> opcion) || (opcion < 0) || (opcion > 4));
         switch (opcion){
             case 1:
                 registrar_orbita();
                 break;
             case 2:{
-                std::string codigo = leer_codigo("Ingrese el código de la órbita");
+                std::string codigo = leer_codigo("Ingrese el codigo de la orbita");
                 Orbita* orbita = buscar_orbita(codigo);
                 if(orbita == nullptr){
-                    std::cout << "Órbita no encontrada" << std::endl;
+                    std::cout << "Orbita no encontrada" << std::endl;
                     break;
                 }
                 orbita->mostrar_orbita();
@@ -388,7 +388,7 @@ void CentroControl::gestion_orbitas(){
                 break;
         }
     }while(opcion != 0);
-    std::cout << "Regresando al menú principal..." << std::endl;
+    std::cout << "Regresando al menu principal..." << std::endl;
 }
 
 void CentroControl::registrar_orbita(){
@@ -396,19 +396,19 @@ void CentroControl::registrar_orbita(){
     std::string nombre;
     double altitud;
     if(numero_orbitas() >= MAX_ORBITAS){
-        std::cout << "No se pueden registrar más órbitas" << std::endl;
+        std::cout << "No se pueden registrar mas orbitas" << std::endl;
         return;
     }
     cod = verificar_codigo_orbita();
     nombre = leer_nombre("Nombre");
     altitud = leer_double("Altitud de referencia (km)");
     if(!std::cin || cod.empty() || nombre.empty()){
-        std::cout << "Registro incompleto, no se guardó la órbita" << std::endl;
+        std::cout << "Registro incompleto, no se guardo la orbita" << std::endl;
         return;
     }
 
     orbitas[numero_orbitas()] = new Orbita(cod, nombre, altitud);
-    std::cout << "Órbita registrada correctamente" << std::endl;
+    std::cout << "Orbita registrada correctamente" << std::endl;
 }
 
 Orbita* CentroControl::buscar_orbita(std::string codigo){
@@ -421,40 +421,40 @@ Orbita* CentroControl::buscar_orbita(std::string codigo){
 }
 
 void CentroControl::asignar_satelite_a_orbita(){
-    std::string codigo = leer_codigo("Ingrese el código del satélite");
+    std::string codigo = leer_codigo("Ingrese el codigo del satelite");
     Satelite* satelite = buscar_satelite(codigo);
     if(satelite == nullptr){
-        std::cout << "Satélite no encontrado" << std::endl;
+        std::cout << "Satelite no encontrado" << std::endl;
         return;
     }
-    std::string cod_orbita = leer_codigo("Ingrese el código de la órbita");
+    std::string cod_orbita = leer_codigo("Ingrese el codigo de la orbita");
     Orbita* orbita = buscar_orbita(cod_orbita);
     if(orbita == nullptr){
-        std::cout << "Órbita no encontrada" << std::endl;
+        std::cout << "Orbita no encontrada" << std::endl;
         return;
     }
     //Un satélite no puede estar en dos órbitas a la vez
     if(satelite->get_orbita() != nullptr){
-        std::cout << "El satélite ya está asignado a la órbita "
+        std::cout << "El satelite ya esta asignado a la orbita "
                   << satelite->get_orbita()->get_codigo() << std::endl;
         return;
     }
     //Solo se marca en el satélite si la órbita logró guardar el puntero
     if(orbita->asignar_satelite(satelite)){
         satelite->set_orbita(orbita);
-        std::cout << "Satélite asignado a órbita correctamente" << std::endl;
+        std::cout << "Satelite asignado a orbita correctamente" << std::endl;
     }
 }
 
 void CentroControl::listar_satelites_por_orbita(){
     if(numero_orbitas() == 0){
-        std::cout << "No hay órbitas registradas" << std::endl;
+        std::cout << "No hay orbitas registradas" << std::endl;
         return;
     }
     for (int i = 0; i < numero_orbitas(); i++){
         if(orbitas[i] != nullptr){
-            std::cout << "Órbita: " << orbitas[i]->get_codigo() << std::endl;
-            std::cout << "Satélites en la órbita:" << std::endl;
+            std::cout << "Orbita: " << orbitas[i]->get_codigo() << std::endl;
+            std::cout << "Satelites en la orbita:" << std::endl;
             orbitas[i]->mostrar_satelites();
         }
     }
@@ -474,25 +474,25 @@ void CentroControl::gestion_estaciones_y_enlaces(){
                 std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
             }
             std::cout << "==== ESTACIONES Y ENLACES ====" << std::endl <<
-            "1. Registrar estación" << std::endl <<
-            "2. Buscar estación" << std::endl <<
+            "1. Registrar estacion" << std::endl <<
+            "2. Buscar estacion" << std::endl <<
             "3. Crear enlace" << std::endl <<
             "4. Eliminar enlace" << std::endl <<
-            "5. Mostrar satélites enlazados con una estación" << std::endl <<
+            "5. Mostrar satelites enlazados con una estacion" << std::endl <<
             "6. Mostrar matriz de enlaces" << std::endl <<
-            "7. Enlaces activos por satélite y por estación" << std::endl <<
-            "0. Regresar al menú principal" << std::endl <<
-            "Seleccione una opción: ";
+            "7. Enlaces activos por satelite y por estacion" << std::endl <<
+            "0. Regresar al menu principal" << std::endl <<
+            "Seleccione una opcion: ";
         } while(!(std::cin >> opcion) || (opcion < 0) || (opcion > 7));
         switch (opcion){
             case 1:
                 registrar_estacion();
                 break;
             case 2:{
-                std::string codigo = leer_codigo("Ingrese el código de la estación");
+                std::string codigo = leer_codigo("Ingrese el codigo de la estacion");
                 EstacionTerrestre* estacion = buscar_estacion(codigo);
                 if(estacion == nullptr){
-                    std::cout << "Estación no encontrada" << std::endl;
+                    std::cout << "Estacion no encontrada" << std::endl;
                     break;
                 }
                 estacion->mostrar_estacion();
@@ -517,7 +517,7 @@ void CentroControl::gestion_estaciones_y_enlaces(){
                 break;
         }
     }while(opcion != 0);
-    std::cout << "Regresando al menú principal..." << std::endl;
+    std::cout << "Regresando al menu principal..." << std::endl;
 }
 
 void CentroControl::registrar_estacion(){
@@ -525,19 +525,19 @@ void CentroControl::registrar_estacion(){
     std::string nombre;
     std::string ubicacion;
     if(numero_estaciones() >= MAX_ESTACIONES){
-        std::cout << "No se pueden registrar más estaciones" << std::endl;
+        std::cout << "No se pueden registrar mas estaciones" << std::endl;
         return;
     }
     cod = verificar_codigo_estacion();
     nombre = leer_nombre("Nombre");
-    ubicacion = leer_nombre("Ubicación");
+    ubicacion = leer_nombre("Ubicacion");
     if(!std::cin || cod.empty() || nombre.empty() || ubicacion.empty()){
-        std::cout << "Registro incompleto, no se guardó la estación" << std::endl;
+        std::cout << "Registro incompleto, no se guardo la estacion" << std::endl;
         return;
     }
 
     estaciones[numero_estaciones()] = new EstacionTerrestre(cod, nombre, ubicacion);
-    std::cout << "Estación registrada correctamente" << std::endl;
+    std::cout << "Estacion registrada correctamente" << std::endl;
 }
 
 EstacionTerrestre* CentroControl::buscar_estacion(std::string codigo){
@@ -568,16 +568,16 @@ int CentroControl::indice_estacion(std::string codigo){
 }
 
 void CentroControl::registrar_enlace(){
-    std::string cod_satelite = leer_codigo("Ingrese el código del satélite");
+    std::string cod_satelite = leer_codigo("Ingrese el codigo del satelite");
     int index_satelite = indice_satelite(cod_satelite);
     if(index_satelite == -1){
-        std::cout << "Satélite no encontrado" << std::endl;
+        std::cout << "Satelite no encontrado" << std::endl;
         return;
     }
-    std::string cod_estacion = leer_codigo("Ingrese el código de la estación");
+    std::string cod_estacion = leer_codigo("Ingrese el codigo de la estacion");
     int index_estacion = indice_estacion(cod_estacion);
     if(index_estacion == -1){
-        std::cout << "Estación no encontrada" << std::endl;
+        std::cout << "Estacion no encontrada" << std::endl;
         return;
     }
     if(enlaces[index_satelite][index_estacion] == 1){
@@ -592,16 +592,16 @@ void CentroControl::registrar_enlace(){
 }
 
 void CentroControl::eliminar_enlace(){
-    std::string cod_satelite = leer_codigo("Ingrese el código del satélite");
+    std::string cod_satelite = leer_codigo("Ingrese el codigo del satelite");
     int index_satelite = indice_satelite(cod_satelite);
     if(index_satelite == -1){
-        std::cout << "Satélite no encontrado" << std::endl;
+        std::cout << "Satelite no encontrado" << std::endl;
         return;
     }
-    std::string cod_estacion = leer_codigo("Ingrese el código de la estación");
+    std::string cod_estacion = leer_codigo("Ingrese el codigo de la estacion");
     int index_estacion = indice_estacion(cod_estacion);
     if(index_estacion == -1){
-        std::cout << "Estación no encontrada" << std::endl;
+        std::cout << "Estacion no encontrada" << std::endl;
         return;
     }
     if(enlaces[index_satelite][index_estacion] == 0){
@@ -617,19 +617,19 @@ void CentroControl::eliminar_enlace(){
 }
 
 void CentroControl::mostrar_satelites_de_estacion(){
-    std::string codigo = leer_codigo("Ingrese el código de la estación");
+    std::string codigo = leer_codigo("Ingrese el codigo de la estacion");
     EstacionTerrestre* estacion = buscar_estacion(codigo);
     if(estacion == nullptr){
-        std::cout << "Estación no encontrada" << std::endl;
+        std::cout << "Estacion no encontrada" << std::endl;
         return;
     }
-    std::cout << "Satélites enlazados con " << estacion->get_codigo() << ":" << std::endl;
+    std::cout << "Satelites enlazados con " << estacion->get_codigo() << ":" << std::endl;
     estacion->mostrar_satelites();
 }
 
 void CentroControl::mostrar_matriz_enlaces(){
     if((numero_satelites() == 0) || (numero_estaciones() == 0)){
-        std::cout << "Hacen falta satélites y estaciones registrados" << std::endl;
+        std::cout << "Hacen falta satelites y estaciones registrados" << std::endl;
         return;
     }
     std::cout << "MATRIZ DE ENLACES" << std::endl;
@@ -669,10 +669,10 @@ void CentroControl::mostrar_matriz_enlaces(){
 
 void CentroControl::mostrar_enlaces_activos(){
     if((numero_satelites() == 0) || (numero_estaciones() == 0)){
-        std::cout << "No hay satélites ni estaciones registrados" << std::endl;
+        std::cout << "No hay satelites ni estaciones registrados" << std::endl;
         return;
     }
-    std::cout << "Enlaces activos por satélite:" << std::endl;
+    std::cout << "Enlaces activos por satelite:" << std::endl;
     for(int i = 0; i < numero_satelites(); i++){
         if(satelites[i] == nullptr){
             continue;
@@ -683,7 +683,7 @@ void CentroControl::mostrar_enlaces_activos(){
         }
         std::cout << "   " << satelites[i]->get_codigo() << ": " << total << std::endl;
     }
-    std::cout << "Enlaces activos por estación:" << std::endl;
+    std::cout << "Enlaces activos por estacion:" << std::endl;
     for(int j = 0; j < numero_estaciones(); j++){
         if(estaciones[j] == nullptr){
             continue;
@@ -700,34 +700,34 @@ void CentroControl::mostrar_enlaces_activos(){
 
 void CentroControl::gestion_transmisiones(){
     if(numero_transmisiones() >= MAX_TRANSMISIONES){
-        std::cout << "No se pueden registrar más transmisiones" << std::endl;
+        std::cout << "No se pueden registrar mas transmisiones" << std::endl;
         return;
     }
-    std::cout << "--- Nueva transmisión ---" << std::endl;
-    std::string cod_satelite = leer_codigo("Satélite");
+    std::cout << "--- Nueva transmision ---" << std::endl;
+    std::string cod_satelite = leer_codigo("Satelite");
     if(cod_satelite.empty()){
-        std::cout << "Transmisión incompleta, no se guardó el envío" << std::endl;
+        std::cout << "Transmision incompleta, no se guardo el envio" << std::endl;
         return;
     }
     int index_satelite = indice_satelite(cod_satelite);
     if(index_satelite == -1){
-        std::cout << "Satélite no encontrado" << std::endl;
+        std::cout << "Satelite no encontrado" << std::endl;
         return;
     }
-    std::string cod_estacion = leer_codigo("Estación");
+    std::string cod_estacion = leer_codigo("Estacion");
     if(cod_estacion.empty()){
-        std::cout << "Transmisión incompleta, no se guardó el envío" << std::endl;
+        std::cout << "Transmision incompleta, no se guardo el envio" << std::endl;
         return;
     }
     int index_estacion = indice_estacion(cod_estacion);
     if(index_estacion == -1){
-        std::cout << "Estación no encontrada" << std::endl;
+        std::cout << "Estacion no encontrada" << std::endl;
         return;
     }
     //Sin un 1 en la matriz no se puede transmitir
     if(enlaces[index_satelite][index_estacion] == 0){
-        std::cout << "No hay enlace entre el satélite " << cod_satelite
-                  << " y la estación " << cod_estacion << std::endl;
+        std::cout << "No hay enlace entre el satelite " << cod_satelite
+                  << " y la estacion " << cod_estacion << std::endl;
         return;
     }
     realizar_transmision(satelites[index_satelite], estaciones[index_estacion]);
@@ -735,35 +735,35 @@ void CentroControl::gestion_transmisiones(){
 
 void CentroControl::realizar_transmision(Satelite* satelite, EstacionTerrestre* estacion){
     if((satelite == nullptr) || (estacion == nullptr)){
-        std::cout << "Transmisión no válida" << std::endl;
+        std::cout << "Transmision no valida" << std::endl;
         return;
     }
     if(satelite->get_estado() == "FUERA DE SERVICIO"){
-        std::cout << "El satélite está fuera de servicio, no puede transmitir" << std::endl;
+        std::cout << "El satelite esta fuera de servicio, no puede transmitir" << std::endl;
         return;
     }
     double datos = leer_double("Datos a transmitir (MB)");
     if(!std::cin){
-        std::cout << "Transmisión incompleta, no se guardó el envío" << std::endl;
+        std::cout << "Transmision incompleta, no se guardo el envio" << std::endl;
         return;
     }
     //El ancho de banda y la potencia no pueden pasar del máximo del satélite
     double ancho_banda = leer_double("Ancho de banda (MB/s)");
     if(!std::cin){
-        std::cout << "Transmisión incompleta, no se guardó el envío" << std::endl;
+        std::cout << "Transmision incompleta, no se guardo el envio" << std::endl;
         return;
     }
     if(ancho_banda <= 0 || (satelite->get_ancho_banda() > 0 && ancho_banda > satelite->get_ancho_banda())){
-        std::cout << "El ancho de banda debe ser positivo y no superar el máximo del satélite" << std::endl;
+        std::cout << "El ancho de banda debe ser positivo y no superar el maximo del satelite" << std::endl;
         return;
     }
     double potencia = leer_double("Potencia utilizada (W)");
     if(!std::cin){
-        std::cout << "Transmisión incompleta, no se guardó el envío" << std::endl;
+        std::cout << "Transmision incompleta, no se guardo el envio" << std::endl;
         return;
     }
     if(potencia <= 0 || potencia > satelite->get_potencia()){
-        std::cout << "La potencia debe ser positiva y no superar el máximo del satélite" << std::endl;
+        std::cout << "La potencia debe ser positiva y no superar el maximo del satelite" << std::endl;
         return;
     }
 
@@ -772,14 +772,14 @@ void CentroControl::realizar_transmision(Satelite* satelite, EstacionTerrestre* 
 
     //Se rechaza si la energia disponible no alcanza o si dejaria la bateria bajo 0%
     if(transmision->get_energia() > satelite->energia_disponible()){
-        std::cout << "Energía insuficiente: la transmisión necesita "
-                  << transmision->get_energia() << " Wh y el satélite tiene "
+        std::cout << "Energia insuficiente: la transmision necesita "
+                  << transmision->get_energia() << " Wh y el satelite tiene "
                   << satelite->energia_disponible() << " Wh" << std::endl;
         delete transmision;
         return;
     }
     if(!satelite->reducir_bateria(transmision->get_energia())){
-        std::cout << "La transmisión dejaría la batería por debajo de 0%" << std::endl;
+        std::cout << "La transmision dejaria la bateria por debajo de 0%" << std::endl;
         delete transmision;
         return;
     }
@@ -787,61 +787,61 @@ void CentroControl::realizar_transmision(Satelite* satelite, EstacionTerrestre* 
     transmisiones[numero_transmisiones()] = transmision;
     std::cout << "Enlace en matriz: 1" << std::endl;
     transmision->mostrar_transmision();
-    std::cout << "Batería anterior: " << bateria_anterior << "%" << std::endl;
-    std::cout << "Batería actual: " << satelite->get_bateria() << "%" << std::endl;
+    std::cout << "Bateria anterior: " << bateria_anterior << "%" << std::endl;
+    std::cout << "Bateria actual: " << satelite->get_bateria() << "%" << std::endl;
     std::cout << "Estado: " << satelite->get_estado() << std::endl;
-    std::cout << "Transmisión registrada correctamente" << std::endl;
+    std::cout << "Transmision registrada correctamente" << std::endl;
 }
 
 void CentroControl::telemetria(){
     if(numero_satelites() == 0){
-        std::cout << "No hay satélites registrados" << std::endl;
+        std::cout << "No hay satelites registrados" << std::endl;
         return;
     }
     int opcion = -1;
     while(opcion != 0){
-        std::cout << "Telemetría" << std::endl;
+        std::cout << "Telemetria" << std::endl;
         std::cout << "1. Registrar muestra" << std::endl;
         std::cout << "2. Mostrar historial" << std::endl;
-        std::cout << "3. Mostrar estadísticas" << std::endl;
+        std::cout << "3. Mostrar estadisticas" << std::endl;
         std::cout << "0. Regresar" << std::endl;
-        std::cout << "Opción: ";
+        std::cout << "Opcion: ";
         if(!(std::cin >> opcion)){
-            std::cout << "Opción inválida" << std::endl;
+            std::cout << "Opcion invalida" << std::endl;
             return;
         }
         if(opcion == 0){
             return;
         }
         if(opcion < 1 || opcion > 3){
-            std::cout << "Opción inválida" << std::endl;
+            std::cout << "Opcion invalida" << std::endl;
             continue;
         }
         std::string codigo;
-        std::cout << "Código del satélite: ";
+        std::cout << "Codigo del satelite: ";
         if(!(std::cin >> codigo)){
             return;
         }
         Satelite* satelite = buscar_satelite(codigo);
         if(satelite == nullptr){
-            std::cout << "Satélite no encontrado" << std::endl;
+            std::cout << "Satelite no encontrado" << std::endl;
             continue;
         }
         if(opcion == 1){
             if(satelite->get_cantidad_muestras() >= MAX_MUESTRAS){
-                std::cout << "El historial está lleno, máximo 12 muestras" << std::endl;
+                std::cout << "El historial esta lleno, maximo 12 muestras" << std::endl;
                 continue;
             }
             double bateria_medida;
             double temperatura;
-            std::cout << "Batería medida (%): ";
+            std::cout << "Bateria medida (%): ";
             if(!(std::cin >> bateria_medida)){
-                std::cout << "Dato inválido" << std::endl;
+                std::cout << "Dato invalido" << std::endl;
                 return;
             }
             std::cout << "Temperatura (°C): ";
             if(!(std::cin >> temperatura)){
-                std::cout << "Dato inválido" << std::endl;
+                std::cout << "Dato invalido" << std::endl;
                 return;
             }
             if(satelite->registrar_muestra(bateria_medida, temperatura)){
@@ -849,7 +849,7 @@ void CentroControl::telemetria(){
                 std::cout << "Muestras: " << satelite->get_cantidad_muestras() << " de 12" << std::endl;
             }
             else{
-                std::cout << "La batería debe estar entre 0 y 100" << std::endl;
+                std::cout << "La bateria debe estar entre 0 y 100" << std::endl;
             }
         }
         else if(opcion == 2){
@@ -863,26 +863,26 @@ void CentroControl::telemetria(){
 
 void CentroControl::control_energetico(){
     if(numero_satelites() == 0){
-        std::cout << "No hay satélites registrados" << std::endl;
+        std::cout << "No hay satelites registrados" << std::endl;
         return;
     }
     int opcion = -1;
     while(opcion != 0){
-        std::cout << "Control energético" << std::endl;
-        std::cout << "1. Consultar batería y estado" << std::endl;
+        std::cout << "Control energetico" << std::endl;
+        std::cout << "1. Consultar bateria y estado" << std::endl;
         std::cout << "2. Recarga solar" << std::endl;
-        std::cout << "3. Satélites críticos y fuera de servicio" << std::endl;
+        std::cout << "3. Satelites criticos y fuera de servicio" << std::endl;
         std::cout << "0. Regresar" << std::endl;
-        std::cout << "Opción: ";
+        std::cout << "Opcion: ";
         if(!(std::cin >> opcion)){
-            std::cout << "Opción inválida" << std::endl;
+            std::cout << "Opcion invalida" << std::endl;
             return;
         }
         if(opcion == 0){
             return;
         }
         if(opcion < 1 || opcion > 3){
-            std::cout << "Opción inválida" << std::endl;
+            std::cout << "Opcion invalida" << std::endl;
             continue;
         }
         if(opcion == 3){
@@ -894,24 +894,24 @@ void CentroControl::control_energetico(){
                 }
             }
             if(cantidad == 0){
-                std::cout << "No hay satélites críticos ni fuera de servicio" << std::endl;
+                std::cout << "No hay satelites criticos ni fuera de servicio" << std::endl;
             }
             continue;
         }
         std::string codigo;
-        std::cout << "Código del satélite: ";
+        std::cout << "Codigo del satelite: ";
         if(!(std::cin >> codigo)){
             return;
         }
         Satelite* satelite = buscar_satelite(codigo);
         if(satelite == nullptr){
-            std::cout << "Satélite no encontrado" << std::endl;
+            std::cout << "Satelite no encontrado" << std::endl;
             continue;
         }
         if(opcion == 1){
-            std::cout << "Batería actual: " << satelite->get_bateria() << "%" << std::endl;
+            std::cout << "Bateria actual: " << satelite->get_bateria() << "%" << std::endl;
             std::cout << "Estado: " << satelite->get_estado() << std::endl;
-            std::cout << "Energía disponible: " << satelite->energia_disponible() << " Wh" << std::endl;
+            std::cout << "Energia disponible: " << satelite->energia_disponible() << " Wh" << std::endl;
         }
         else{
             double potencia_solar;
@@ -919,24 +919,24 @@ void CentroControl::control_energetico(){
             double eficiencia;
             std::cout << "Potencia solar (W): ";
             if(!(std::cin >> potencia_solar)){
-                std::cout << "Dato inválido" << std::endl;
+                std::cout << "Dato invalido" << std::endl;
                 return;
             }
             std::cout << "Tiempo de recarga (s): ";
             if(!(std::cin >> segundos)){
-                std::cout << "Dato inválido" << std::endl;
+                std::cout << "Dato invalido" << std::endl;
                 return;
             }
             std::cout << "Eficiencia (0 a 1): ";
             if(!(std::cin >> eficiencia)){
-                std::cout << "Dato inválido" << std::endl;
+                std::cout << "Dato invalido" << std::endl;
                 return;
             }
             double bateria_anterior = satelite->get_bateria();
             if(satelite->recargar_solar(potencia_solar, segundos, eficiencia)){
                 std::cout << "Recarga realizada" << std::endl;
-                std::cout << "Batería anterior: " << bateria_anterior << "%" << std::endl;
-                std::cout << "Batería actual: " << satelite->get_bateria() << "%" << std::endl;
+                std::cout << "Bateria anterior: " << bateria_anterior << "%" << std::endl;
+                std::cout << "Bateria actual: " << satelite->get_bateria() << "%" << std::endl;
                 std::cout << "Estado: " << satelite->get_estado() << std::endl;
             }
             else{
@@ -950,19 +950,19 @@ void CentroControl::reportes(){
     int opcion = -1;
     while(opcion != 0){
         std::cout << "Reportes" << std::endl;
-        std::cout << "1. Cantidad de satélites por tipo" << std::endl;
-        std::cout << "2. Satélites por órbita" << std::endl;
+        std::cout << "1. Cantidad de satelites por tipo" << std::endl;
+        std::cout << "2. Satelites por orbita" << std::endl;
         std::cout << "3. Velocidad y periodo orbital" << std::endl;
-        std::cout << "4. Promedio de batería" << std::endl;
-        std::cout << "5. Satélite con menor batería" << std::endl;
-        std::cout << "6. Datos transmitidos y energía consumida" << std::endl;
+        std::cout << "4. Promedio de bateria" << std::endl;
+        std::cout << "5. Satelite con menor bateria" << std::endl;
+        std::cout << "6. Datos transmitidos y energia consumida" << std::endl;
         std::cout << "7. Historial de transmisiones" << std::endl;
-        std::cout << "8. Resumen de telemetría" << std::endl;
+        std::cout << "8. Resumen de telemetria" << std::endl;
         std::cout << "9. Matriz y enlaces activos" << std::endl;
         std::cout << "0. Regresar" << std::endl;
-        std::cout << "Opción: ";
+        std::cout << "Opcion: ";
         if(!(std::cin >> opcion)){
-            std::cout << "Opción inválida" << std::endl;
+            std::cout << "Opcion invalida" << std::endl;
             return;
         }
         if(opcion == 0){
@@ -982,9 +982,9 @@ void CentroControl::reportes(){
                         }
                     }
                 }
-                std::cout << "Satélites registrados: " << comunicacion + meteorologicos << std::endl;
-                std::cout << "Comunicación: " << comunicacion << std::endl;
-                std::cout << "Meteorológicos: " << meteorologicos << std::endl;
+                std::cout << "Satelites registrados: " << comunicacion + meteorologicos << std::endl;
+                std::cout << "Comunicacion: " << comunicacion << std::endl;
+                std::cout << "Meteorologicos: " << meteorologicos << std::endl;
                 break;
             }
             case 2:
@@ -992,12 +992,12 @@ void CentroControl::reportes(){
                 break;
             case 3:{
                 if(numero_satelites() == 0){
-                    std::cout << "No hay satélites registrados" << std::endl;
+                    std::cout << "No hay satelites registrados" << std::endl;
                     break;
                 }
                 for(int i = 0; i < MAX_SATELITES; i++){
                     if(satelites[i] != nullptr){
-                        std::cout << "Satélite: " << satelites[i]->get_codigo() << std::endl;
+                        std::cout << "Satelite: " << satelites[i]->get_codigo() << std::endl;
                         std::cout << "Velocidad: " << satelites[i]->velocidad_orbital() << " km/s" << std::endl;
                         std::cout << "Periodo: " << satelites[i]->periodo_orbital() << " s" << std::endl;
                         std::cout << "Periodo en minutos: " << satelites[i]->periodo_orbital_minutos() << " min" << std::endl;
@@ -1015,10 +1015,10 @@ void CentroControl::reportes(){
                     }
                 }
                 if(cantidad == 0){
-                    std::cout << "No hay satélites para calcular el promedio" << std::endl;
+                    std::cout << "No hay satelites para calcular el promedio" << std::endl;
                 }
                 else{
-                    std::cout << "Promedio de batería de la red: " << suma / cantidad << "%" << std::endl;
+                    std::cout << "Promedio de bateria de la red: " << suma / cantidad << "%" << std::endl;
                 }
                 break;
             }
@@ -1035,10 +1035,10 @@ void CentroControl::reportes(){
                     }
                 }
                 if(menor == nullptr){
-                    std::cout << "No hay satélites registrados" << std::endl;
+                    std::cout << "No hay satelites registrados" << std::endl;
                 }
                 else{
-                    std::cout << "Satélite con menor batería:" << std::endl;
+                    std::cout << "Satelite con menor bateria:" << std::endl;
                     menor->mostrar_resumen();
                 }
                 break;
@@ -1056,7 +1056,7 @@ void CentroControl::reportes(){
                 }
                 std::cout << "Transmisiones registradas: " << cantidad << std::endl;
                 std::cout << "Datos transmitidos: " << datos << " MB" << std::endl;
-                std::cout << "Energía consumida: " << energia << " Wh" << std::endl;
+                std::cout << "Energia consumida: " << energia << " Wh" << std::endl;
                 break;
             }
             case 7:{
@@ -1064,7 +1064,7 @@ void CentroControl::reportes(){
                 for(int i = 0; i < MAX_TRANSMISIONES; i++){
                     if(transmisiones[i] != nullptr){
                         cantidad++;
-                        std::cout << "Transmisión " << cantidad << std::endl;
+                        std::cout << "Transmision " << cantidad << std::endl;
                         transmisiones[i]->mostrar_transmision();
                     }
                 }
@@ -1075,12 +1075,12 @@ void CentroControl::reportes(){
             }
             case 8:{
                 if(numero_satelites() == 0){
-                    std::cout << "No hay satélites registrados" << std::endl;
+                    std::cout << "No hay satelites registrados" << std::endl;
                     break;
                 }
                 for(int i = 0; i < MAX_SATELITES; i++){
                     if(satelites[i] != nullptr){
-                        std::cout << "Satélite: " << satelites[i]->get_codigo() << std::endl;
+                        std::cout << "Satelite: " << satelites[i]->get_codigo() << std::endl;
                         std::cout << "Muestras: " << satelites[i]->get_cantidad_muestras() << " de 12" << std::endl;
                         satelites[i]->mostrar_estadisticas();
                     }
@@ -1092,7 +1092,7 @@ void CentroControl::reportes(){
                 mostrar_enlaces_activos();
                 break;
             default:
-                std::cout << "Opción inválida" << std::endl;
+                std::cout << "Opcion invalida" << std::endl;
                 break;
         }
     }

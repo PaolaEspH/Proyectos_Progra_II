@@ -21,15 +21,15 @@ int main(){
                 std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
             }
             std::cout << "==== CENTRO DE CONTROL SATELITAL ====" << std::endl <<
-            "1. Gestión de satélites" << std::endl <<
-            "2. Gestión de órbitas" << std::endl <<
+            "1. Gestion de satelites" << std::endl <<
+            "2. Gestion de orbitas" << std::endl <<
             "3. Estaciones y enlaces" << std::endl <<
-            "4. Telemetría" << std::endl <<
+            "4. Telemetria" << std::endl <<
             "5. Transmisiones" << std::endl <<
-            "6. Control energético" << std::endl <<
+            "6. Control energetico" << std::endl <<
             "7. Reportes" << std::endl <<
             "0. Salir" << std::endl <<
-            "Seleccione una opción: ";
+            "Seleccione una opcion: ";
         } while(!(std::cin >> opcion) || (opcion < 0) || (opcion > 7));
         switch (opcion){
             case 1: 

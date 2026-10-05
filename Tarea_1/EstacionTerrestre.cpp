@@ -37,11 +37,11 @@ bool EstacionTerrestre::tiene_satelite(Satelite* satelite) const{
 
 bool EstacionTerrestre::agregar_satelite(Satelite* satelite){
     if(satelite == nullptr){
-        std::cout << "Satélite no válido" << std::endl;
+        std::cout << "Satelite no valido" << std::endl;
         return false;
     }
     if(tiene_satelite(satelite)){
-        std::cout << "El satélite ya está enlazado con esta estación" << std::endl;
+        std::cout << "El satelite ya esta enlazado con esta estacion" << std::endl;
         return false;
     }
     for(int i = 0; i < MAX_SATELITES; i++){
@@ -50,7 +50,7 @@ bool EstacionTerrestre::agregar_satelite(Satelite* satelite){
             return true;
         }
     }
-    std::cout << "No se puede enlazar, la estación está llena" << std::endl;
+    std::cout << "No se puede enlazar, la estacion esta llena" << std::endl;
     return false;
 }
 
@@ -83,7 +83,7 @@ int EstacionTerrestre::numero_satelites_enlazados() const{
 
 void EstacionTerrestre::mostrar_satelites(){
     if(numero_satelites_enlazados() == 0){
-        std::cout << "   (sin satélites enlazados)" << std::endl;
+        std::cout << "   (sin satelites enlazados)" << std::endl;
         return;
     }
     for(int i = 0; i < MAX_SATELITES; i++){
@@ -95,8 +95,8 @@ void EstacionTerrestre::mostrar_satelites(){
 }
 
 void EstacionTerrestre::mostrar_estacion(){
-    std::cout << "Código: " << codigo << std::endl;
+    std::cout << "Codigo: " << codigo << std::endl;
     std::cout << "Nombre: " << nombre << std::endl;
-    std::cout << "Ubicación: " << ubicacion << std::endl;
-    std::cout << "Satélites enlazados: " << numero_satelites_enlazados() << std::endl;
+    std::cout << "Ubicacion: " << ubicacion << std::endl;
+    std::cout << "Satelites enlazados: " << numero_satelites_enlazados() << std::endl;
 }

@@ -25,11 +25,11 @@ double Orbita::get_altitud() const{
 
 bool Orbita::asignar_satelite(Satelite* satelite){
     if(satelite == nullptr){
-        std::cout << "Satélite no válido" << std::endl;
+        std::cout << "Satelite no valido" << std::endl;
         return false;
     }
     if(tiene_satelite(satelite)){
-        std::cout << "El satélite ya pertenece a esta órbita" << std::endl;
+        std::cout << "El satelite ya pertenece a esta orbita" << std::endl;
         return false;
     }
     for(int i = 0; i < MAX_SATELITES; i++){
@@ -38,13 +38,13 @@ bool Orbita::asignar_satelite(Satelite* satelite){
             return true;
         }
     }
-    std::cout << "No se puede asignar el satélite, la órbita está llena" << std::endl;
+    std::cout << "No se puede asignar el satelite, la orbita esta llena" << std::endl;
     return false;
 }
 
 void Orbita::mostrar_satelites(){
     if(numero_satelites_asignados_a_orbita() == 0){
-        std::cout << "   (sin satélites asignados)" << std::endl;
+        std::cout << "   (sin satelites asignados)" << std::endl;
         return;
     }
     int i = 0;
@@ -65,10 +65,10 @@ int Orbita::numero_satelites_asignados_a_orbita() const{
 }
 
 void Orbita::mostrar_orbita(){
-    std::cout << "Código: " << codigo << std::endl;
+    std::cout << "Codigo: " << codigo << std::endl;
     std::cout << "Nombre: " << nombre << std::endl;
     std::cout << "Altitud de referencia: " << altitud << " km" << std::endl;
-    std::cout << "Satélites asignados: " << numero_satelites_asignados_a_orbita() << std::endl;
+    std::cout << "Satelites asignados: " << numero_satelites_asignados_a_orbita() << std::endl;
 }
 
 bool Orbita::tiene_satelite(Satelite* satelite) const{

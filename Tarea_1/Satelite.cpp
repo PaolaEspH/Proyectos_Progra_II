@@ -119,10 +119,10 @@ std::string Satelite::get_estado() const{
         return "NORMAL";
     }
     else if(bateria >= 20){
-        return "PRECAUCIÓN";
+        return "PRECAUCION";
     }
     else if(bateria > 0){
-        return "CRÍTICO";
+        return "CRITICO";
     }
     else{
         return "FUERA DE SERVICIO";
@@ -150,37 +150,37 @@ bool Satelite::reducir_bateria(double energia){
 //Listado corto: tipo, altitud, batería y estado
 void Satelite::mostrar_resumen() const{
     std::cout << codigo << " | " << nombre
-              << " | Tipo: " << (tipo == 1 ? "Comunicación" : "Meteorológico")
+              << " | Tipo: " << (tipo == 1 ? "Comunicacion" : "Meteorologico")
               << " | Altitud: " << altitud << " km"
-              << " | Batería: " << bateria << "%"
+              << " | Bateria: " << bateria << "%"
               << " | Estado: " << get_estado() << std::endl;
 }
 
 void Satelite::mostrar_satelite() const{
-    std::cout << "Código: " << codigo << std::endl;
+    std::cout << "Codigo: " << codigo << std::endl;
     std::cout << "Nombre: " << nombre << std::endl;
-    std::cout << "Tipo: " << (tipo == 1 ? "Comunicación" : "Meteorológico") << std::endl;
+    std::cout << "Tipo: " << (tipo == 1 ? "Comunicacion" : "Meteorologico") << std::endl;
     std::cout << "Masa: " << masa << " kg" << std::endl;
     std::cout << "Altitud: " << altitud << " km" << std::endl;
-    std::cout << "Capacidad energética: " << capacidad << " Wh" << std::endl;
-    std::cout << "Batería actual: " << bateria << "%" << std::endl;
-    std::cout << "Potencia de transmisión: " << potencia << " W" << std::endl;
+    std::cout << "Capacidad energetica: " << capacidad << " Wh" << std::endl;
+    std::cout << "Bateria actual: " << bateria << "%" << std::endl;
+    std::cout << "Potencia de transmision: " << potencia << " W" << std::endl;
     if(tipo == 1){
         std::cout << "Ancho de banda: " << ancho_banda << " MB/s" << std::endl;
     }
     else{
-        std::cout << "Resolución del sensor: " << resolucion << " m" << std::endl;
+        std::cout << "Resolucion del sensor: " << resolucion << " m" << std::endl;
         std::cout << "Cobertura: " << cobertura << "%" << std::endl;
     }
     std::cout << "Velocidad orbital: " << velocidad_orbital() << " km/s" << std::endl;
     std::cout << "Periodo orbital: " << periodo_orbital() << " s ("
               << periodo_orbital_minutos() << " min)" << std::endl;
-    std::cout << "Estado energético: " << get_estado() << std::endl;
+    std::cout << "Estado energetico: " << get_estado() << std::endl;
     if(orbita != nullptr){
-        std::cout << "Órbita asignada: " << orbita->get_codigo() << std::endl;
+        std::cout << "Orbita asignada: " << orbita->get_codigo() << std::endl;
     }
     else{
-        std::cout << "Órbita asignada: ninguna" << std::endl;
+        std::cout << "Orbita asignada: ninguna" << std::endl;
     }
     std::cout << std::endl;
 }
@@ -190,7 +190,7 @@ bool Satelite::set_orbita(Orbita* orbita){
         return false;
     }
     if(this->orbita != nullptr){
-        std::cout << "El satélite ya está asignado a la órbita " << this->orbita->get_codigo() << std::endl;
+        std::cout << "El satelite ya esta asignado a la orbita " << this->orbita->get_codigo() << std::endl;
         return false;
     }
     this->orbita = orbita;
@@ -221,14 +221,14 @@ void Satelite::mostrar_historial(){
     }
     for(int i = 0; i < cantidadMuestras; i++){
         std::cout << "Muestra " << i + 1 << std::endl;
-        std::cout << "Batería: " << historialBateria[i] << "%" << std::endl;
+        std::cout << "Bateria: " << historialBateria[i] << "%" << std::endl;
         std::cout << "Temperatura: " << historialTemperatura[i] << " °C" << std::endl;
     }
 }
 
 void Satelite::mostrar_estadisticas(){
     if(cantidadMuestras == 0){
-        std::cout << "No hay muestras para calcular estadísticas" << std::endl;
+        std::cout << "No hay muestras para calcular estadisticas" << std::endl;
         return;
     }
     double suma_bateria = 0;
@@ -255,12 +255,12 @@ void Satelite::mostrar_estadisticas(){
             maxima_temperatura = historialTemperatura[i];
         }
     }
-    std::cout << "Promedio de batería: " << suma_bateria / cantidadMuestras << "%" << std::endl;
-    std::cout << "Mínimo de batería: " << minima_bateria << "%" << std::endl;
-    std::cout << "Máximo de batería: " << maxima_bateria << "%" << std::endl;
+    std::cout << "Promedio de bateria: " << suma_bateria / cantidadMuestras << "%" << std::endl;
+    std::cout << "Minimo de bateria: " << minima_bateria << "%" << std::endl;
+    std::cout << "Maximo de bateria: " << maxima_bateria << "%" << std::endl;
     std::cout << "Promedio de temperatura: " << suma_temperatura / cantidadMuestras << " °C" << std::endl;
-    std::cout << "Mínimo de temperatura: " << minima_temperatura << " °C" << std::endl;
-    std::cout << "Máximo de temperatura: " << maxima_temperatura << " °C" << std::endl;
+    std::cout << "Minimo de temperatura: " << minima_temperatura << " °C" << std::endl;
+    std::cout << "Maximo de temperatura: " << maxima_temperatura << " °C" << std::endl;
 }
 
 bool Satelite::recargar_solar(double potencia_solar, double segundos, double eficiencia){
