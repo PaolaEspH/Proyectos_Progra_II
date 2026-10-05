@@ -10,6 +10,15 @@ Repositorio para los proyectos del curso CI0113-Programacion II de la carrera de
 
 Como primera tarea, el repositorio contiene un programa que permite, desde consola, registrar satélites, órbitas y estaciones terrestres, simular transmisiones y llevar el control de telemetría y energía.
 
+## Compilación y ejecución
+
+Desde la carpeta `Tarea_1`:
+
+```powershell
+g++ main_tarea1.cpp CentroControl.cpp Satelite.cpp Orbita.cpp EstacionTerrestre.cpp Transmision.cpp -o centro_control.exe
+.\centro_control.exe
+```
+
 ## Funcionalidades
 
 | Opción | Funciones |
@@ -35,7 +44,7 @@ Cada clase tiene su declaración en un `.hpp` y su implementación en un `.cpp`.
 | `EstacionTerrestre.hpp` / `EstacionTerrestre.cpp` | Datos de las estaciones y satélites enlazados. |
 | `Transmision.hpp` / `Transmision.cpp` | Datos y cálculos de cada envío. |
 | `auxiliar.hpp` | Límites de los arreglos, constantes y declaraciones adelantadas. |
-| `docs/UML.pdf` | Diagrama de clases. |
+| `Tarea_1/docs/UML.pdf` | Diagrama de clases. |
 
 ## Límites y comportamiento
 

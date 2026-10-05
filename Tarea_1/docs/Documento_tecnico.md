@@ -45,3 +45,7 @@ La matriz `enlaces` tiene 100 filas y 100 columnas. Cada fila corresponde a una 
 Al crear o eliminar un enlace se actualizan la celda de la matriz y el arreglo de satélites de la estación. Antes de transmitir se comprueba que la celda correspondiente tenga un `1`.
 
 La impresión muestra las filas y columnas de los objetos registrados, con sus códigos como encabezados. Para contar los enlaces activos se suman los valores de cada fila y columna mediante bucles.
+
+## Diseño
+
+Cada clase maneja los datos y cálculos que le corresponden. `CentroControl` reúne los registros y libera los objetos, mientras las demás clases guardan punteros a esos mismos objetos para no duplicarlos. Los arreglos fijos y la matriz se usan como pide el enunciado.
