@@ -222,7 +222,7 @@ void Satelite::mostrar_historial(){
     for(int i = 0; i < cantidadMuestras; i++){
         std::cout << "Muestra " << i + 1 << std::endl;
         std::cout << "Bateria: " << historialBateria[i] << "%" << std::endl;
-        std::cout << "Temperatura: " << historialTemperatura[i] << " °C" << std::endl;
+        std::cout << "Temperatura: " << historialTemperatura[i] << " Celsius" << std::endl;
     }
 }
 
@@ -258,9 +258,9 @@ void Satelite::mostrar_estadisticas(){
     std::cout << "Promedio de bateria: " << suma_bateria / cantidadMuestras << "%" << std::endl;
     std::cout << "Minimo de bateria: " << minima_bateria << "%" << std::endl;
     std::cout << "Maximo de bateria: " << maxima_bateria << "%" << std::endl;
-    std::cout << "Promedio de temperatura: " << suma_temperatura / cantidadMuestras << " °C" << std::endl;
-    std::cout << "Minimo de temperatura: " << minima_temperatura << " °C" << std::endl;
-    std::cout << "Maximo de temperatura: " << maxima_temperatura << " °C" << std::endl;
+    std::cout << "Promedio de temperatura: " << suma_temperatura / cantidadMuestras << " Celsius" << std::endl;
+    std::cout << "Minimo de temperatura: " << minima_temperatura << " Celsius" << std::endl;
+    std::cout << "Maximo de temperatura: " << maxima_temperatura << " Celsius" << std::endl;
 }
 
 bool Satelite::recargar_solar(double potencia_solar, double segundos, double eficiencia){

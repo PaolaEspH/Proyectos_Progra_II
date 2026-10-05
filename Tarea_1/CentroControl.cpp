@@ -839,7 +839,7 @@ void CentroControl::telemetria(){
                 std::cout << "Dato invalido" << std::endl;
                 return;
             }
-            std::cout << "Temperatura (°C): ";
+            std::cout << "Temperatura (Celsius): ";
             if(!(std::cin >> temperatura)){
                 std::cout << "Dato invalido" << std::endl;
                 return;
