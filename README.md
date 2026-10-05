@@ -1,6 +1,8 @@
 
 Repositorio para los proyectos del curso CI0113-Programacion II de la carrera de Computación con Varios Énfasis.
 
+Repositorio en GitHub: https://github.com/PaolaEspH/Proyectos_Progra_II
+
 # Estudiantes:
 
 - Sebastian Miranda Ramirez C4H274

@@ -1,5 +1,7 @@
 # Documento técnico
 
+Repositorio en GitHub: https://github.com/PaolaEspH/Proyectos_Progra_II
+
 El programa está dividido en cinco clases. Cada una guarda sus datos y tiene los métodos correspondientes. `CentroControl` administra los objetos y las operaciones del menú.
 
 ## Diagrama de clases
