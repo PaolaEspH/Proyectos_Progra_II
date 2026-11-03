@@ -25,8 +25,9 @@ Un contenedor es un objeto que puede guardar y administrar objetos de otros tipo
 
 
 
+## Parte 5
 
-
+![Captura de salida](image.png)
 
 
 
