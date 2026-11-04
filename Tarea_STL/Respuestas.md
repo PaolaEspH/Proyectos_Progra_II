@@ -3,16 +3,16 @@ Paola Espinoza Hernández, Sebastián Miranda
 
 ## Parte 1
 
-1. 
+1. La STL significa Standard Template Library, o Biblioteca Estándar de Plantillas. Es un conjunto de estructuras de datos, iteradores y algoritmos que forman parte de la biblioteca estándar de C++. La idea es poder usar una lista o buscar y ordenar datos sin tener que programar todo desde cero. Por ejemplo, en clase hicimos los nodos y los enlaces de una lista doble; con `std::list` esa implementación ya viene hecha. Se basa en plantillas, así que una misma estructura puede trabajar con distintos tipos de datos. La desarrollaron principalmente Alexander Stepanov y Meng Lee en HP Labs, a principios de los años noventa. En 1994 el comité de C++ aceptó incorporarla al borrador del estándar y quedó incluida en C++98, publicado en 1998.
 
 
 2. **Contenedor:** Un clase que puede contener y administrar objetos de otro tipo. Existen los contenedores secuenciales (que tienen orden) y los asociativos (con llaves).
 **Iterador:** Generalización de punteros, que permiten recorrer contenedores de manera uniforme. Existen los de acceso aleatorio, bidireccionales, hacia adelante y de entrada y salida.
 **Algoritmo:** Los algoritmos de STL son algoritmos implementados de manera genérica, capaces de recorrer los contenedores realizados por los usuarios. Los usuraios también pueden realizar algoritmos genéricos. Se agrupan en 4 grupos: los que cambian el orden de los elementos en el contenedor, los que no, los de ordenamiento y operaciones similares, y los de operaciones numéricas.
 
-3. 
+3. No hay que instalarla aparte; normalmente ya viene con el compilador y su biblioteca estándar de C++. Para usarla incluimos el encabezado que necesitamos, igual que hacemos con `<iostream>`. Los encabezados llevan el mismo nombre que cada contenedor o adaptador: `<vector>`, `<deque>`, `<list>`, `<array>`, `<set>`, `<stack>` y `<queue>`. Por ejemplo, con `#include <vector>` ya podemos declarar un `std::vector<int>`. Para algoritmos como `find`, `count` o `sort`, incluimos `<algorithm>`.
 
-4.
+4. `std` es el espacio de nombres de la biblioteca estándar de C++. Podemos verlo como un grupo donde están nombres como `vector`, `list` y `cout`, para distinguirlos de otros que usemos en el programa. Por eso `std::vector` indica que queremos el `vector` que está dentro de `std`, igual que pasa con `std::cout`. Cuando ponemos `using namespace std;`, podemos usar esos nombres sin escribir `std::` cada vez.
 
 5. Incluye casi todas las librerías estándar de C y C++. No se recomienda utilizarlo porque carga librerías que no se van a utilizar, lo que puede aumentar el tiempo de compilación. Además, podría causar coalisión con los nombres reservados de las librerías.
 
@@ -590,3 +590,8 @@ cppreference.com. (s. f.). Iterator library. cppreference.com. https://en.cppref
 cppreference.com. (s. f.). std::stack. cppreference.com. https://en.cppreference.com/cpp/container/stack
 cppreference.com. (s. f.). std::queue. cppreference.com. https://en.cppreference.com/cpp/container/queue
 Weidl, J. (1996, abril 26). The standard template library tutorial. Information Systems Institute, Distributed Systems Department, Technical University Vienna. https://pages.di.unipi.it/corradini/Didattica/AP-24/DOCS/stl-tutorial-Weidl.pdf
+
+Stepanov, A. (s. f.). Short History of STL. https://www.stepanovpapers.com/history%20of%20STL.pdf
+Musser, D. R., Derge, G. J. y Saini, A. (2001). STL Tutorial and Reference Guide: C++ Programming with the Standard Template Library (2.ª ed.). Addison-Wesley. https://www.informit.com/store/stl-tutorial-and-reference-guide-c-plus-plus-programming-9780201379235
+GNU Project. (s. f.). Headers. The GNU C++ Library Manual. https://gcc.gnu.org/onlinedocs/libstdc++/manual/using_headers.html
+Microsoft. (s. f.). Namespaces (C++). Microsoft Learn. https://learn.microsoft.com/en-us/cpp/cpp/namespaces-cpp
