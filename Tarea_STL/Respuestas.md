@@ -300,7 +300,206 @@ Busqueda de 20: Encontrado
 
 ## Parte 3
 
+### 1. ¿Qué es un adaptador de contenedor? ¿Por qué se dice que `stack` y `queue` no son contenedores "completos"?
 
+Un adaptador de contenedor es una clase de la STL que utiliza un contenedor existente (como `deque`, `vector` o `list`) para almacenar datos, pero expone únicamente una interfaz específica. Su objetivo es restringir las operaciones disponibles para implementar un comportamiento determinado y cumplir las políticas LIFO o FIFO.
+
+No son contenedores completos porque no tienen iteradores ni acceso aleatorio, no permiten recorrer los elementos y restringen el acceso a ciertos elementos, como la cima o los extremos.
+
+
+### 2. ¿Qué contenedor usan por defecto `stack` y `queue` por dentro? ¿Se puede cambiar?
+
+Por defecto, ambos usan `std::deque`. Sin embargo, este contenedor puede cambiare utilizando el segundo parámetro del template, que permite indicar otro contenedor compatible.
+
+Por ejemplo, un stack que utiliza `vector` internamente:
+
+```cpp
+#include <stack>
+#include <vector>
+
+std::stack<int, std::vector<int>> miStackVector;
+```
+
+
+### 3. Explique las políticas LIFO y FIFO con un ejemplo de la vida real
+
+#### LIFO (Last In, First Out)
+
+**Último en entrar, primero en salir:** El último elemento agregado es el primero que se elimina.
+
+**Ejemplo:** una pila de platos. Los platos se apilan uno encima de otro, y se empieza lavando el que se encuentra más aariba, es decir, el que se puso de último.
+
+#### FIFO (First In, First Out)
+
+**Primero en entrar, primero en salir:** El primer elemento agregado es el primero que se elimina.
+
+**Ejemplo:** una fila en un supermercado. Las personas son atendidas en su orden de llegada, de modo que el primero en la fila es el primero en pagar.
+
+### 4. Funciones principales de cada adaptador
+
+#### `std::stack`
+
+1. `push(valor)`: Inserta un elemento en la cima.
+2. `pop()`: Elimina el elemento que está en la cima.
+3. `top()`: Devuelve una referencia al elemento ubicado en la cima.
+4. `size()`: Retorna la cantidad de elementos almacenados.
+5. `empty()`: Retorna `true` si el stack está vacío.
+6. `emplace(args...)`: Construye un elemento directamente en la cima.
+
+#### `std::queue`
+
+1. `push(valor)`: Inserta un elemento al final de la cola.
+2. `pop()`: Elimina el elemento que se encuentra al frente.
+3. `front()`: Devuelve una referencia al elemento del frente.
+4. `back()`: Devuelve una referencia al último elemento de la cola.
+5. `size()`: Retorna la cantidad de elementos almacenados.
+6. `empty()`: Retorna `true` si la cola está vacía.
+7. `emplace(args...)`: Construye un elemento directamente al final de la cola.
+
+### 5. ¿Por qué `pop()` no devuelve el elemento eliminado?
+
+La interfaz separa la consulta del elemento y su eliminación, puesto que si `pop()` devolviera el elemento y ocurriera una excepción durante la copia o movimiento del valor, el elemento podría perderse.
+
+Por eso se debe obtener primero el dato y luego eliminarlo:
+
+```cpp
+int valor = s.top();
+s.pop();
+```
+
+o para una cola:
+
+```cpp
+std::string nombre = q.front();
+q.pop();
+```
+
+### 6. ¿Por qué estos adaptadores no tienen iteradores?
+
+Porque su objetivo es imponer una política de acceso restringida. Si existieran iteradores podrían recorrerse o modificarse elementos internos, rompiendo la filosofía LIFO y FIFO.
+
+#### Implicaciones
+
+No se puede hacer:
+
+```cpp
+for (int x : miStack)
+{
+    std::cout << x;
+}
+```
+
+Tampoco:
+
+```cpp
+miStack.begin();
+miStack.end();
+```
+
+Para recorrerlos es necesario extraer elementos:
+
+```cpp
+while (!s.empty())
+{
+    std::cout << s.top() << " ";
+    s.pop();
+}
+```
+
+Esto destruye el contenido original.
+
+Si se desea conservarlo, se debe crear una copia y procesar la copia:
+
+```cpp
+std::stack<int> copia = s;
+```
+
+### 7. Ejemplo mínimo de `std::stack`
+
+```cpp
+#include <iostream>
+#include <stack>
+
+using namespace std;
+
+int main()
+{
+    stack<int> s;
+
+    s.push(10);
+    s.push(20);
+    s.push(30);
+
+    cout << "Cima (top): " << s.top() << endl;
+    cout << "Tamaño: " << s.size() << endl;
+
+    cout << "Vaciando el stack (LIFO):" << endl;
+
+    while (!s.empty())
+    {
+        cout << s.top() << " ";
+        s.pop();
+    }
+
+    cout << endl;
+
+    return 0;
+}
+```
+
+#### Salida esperada
+
+```text
+Cima (top): 30
+Tamaño: 3
+Vaciando el stack (LIFO):
+30 20 10
+```
+
+---
+
+### 8. Ejemplo mínimo de `std::queue`
+
+```cpp
+#include <iostream>
+#include <queue>
+#include <string>
+
+using namespace std;
+
+int main()
+{
+    queue<string> q;
+
+    q.push("Ana");
+    q.push("Carlos");
+    q.push("Elena");
+
+    cout << "Frente (front): " << q.front() << endl;
+    cout << "Final (back): " << q.back() << endl;
+
+    cout << "Vaciando la queue (FIFO):" << endl;
+
+    while (!q.empty())
+    {
+        cout << q.front() << " ";
+        q.pop();
+    }
+
+    cout << endl;
+
+    return 0;
+}
+```
+
+#### Salida esperada
+
+```text
+Frente (front): Ana
+Final (back): Elena
+Vaciando la queue (FIFO):
+Ana Carlos Elena
+```
 
 
 
