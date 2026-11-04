@@ -77,7 +77,7 @@ Nuevo tamaño tras pop_back: 2
 
 Un `deque` (double-ended queue) utiliza una estructura de bloques de memoria múltiples y separados, gestionados mediante un arreglo central de punteros a dichos bloques. Esto permite un crecimiento eficiente por ambos extremos sin requerir mover todos los elementos contiguos.
 
-Mientras que `vector` almacena sus elementos en un único bloque de memoria contigua y crece de forma eficiente por el final, `deque` utiliza múltiples bloques de memoria discontinuos conectados por un arreglo de índices. Así, como para insertar no necesita desplazar los elementos existentes en la memoria, sino que asigna o enlaza un nuevo bloque (o ranura) sin alterar la posición del resto de bloques de datos, puede insertar rápidamente tanto al inicio como al final.
+Mientras que `vector` almacena sus elementos en un único bloque de memoria contigua y crece de forma eficiente por el final, `deque` utiliza múltiples bloques de memoria discontinuos conectados por un arreglo de índices. Así, como para insertar en los extremos no necesita desplazar los elementos existentes en la memoria, sino que asigna o enlaza un nuevo bloque (o ranura) sin alterar la posición del resto de bloques de datos, puede insertar rápidamente tanto al inicio como al final.
 
 #### 2. Funciones Principales
 
@@ -184,7 +184,7 @@ int main() {
 
 #### 1. Funcionamiento Interno
 
-Un arreglo estático de tamaño fijo envuelto en una clase de C++. Su memoria se aloja directamente (usualmente en el stack) y su tamaño no puede cambiar después de su declaración.
+Un arreglo estático de tamaño fijo envuelto en una clase de C++.El almacenamiento es parte del objeto y su tamaño no puede cambiar después de su declaración.
 
 Se diferencia de un arreglo tradicional porque soporta iteradores de la STL, y permite operaciones seguras como asignaciones directas entre objetos `array` completos (ej. `arr1 = arr2;`), conoce su propio tamaño mediante `.size()` y no decae implícitamente a un puntero (pointer decay al pasarlo a funciones).
 
@@ -285,7 +285,7 @@ Busqueda de 20: Encontrado
 #### 4. Cuándo usarlo y cuándo no
 
 - **Cuándo es la mejor opción:** Cuando se necesita garantizar que no existan elementos duplicados y que los datos permanezcan ordenados.
-- **Cuándo es mala idea:** Cuando se quiere conservar el orden de inserción. Cuando se realizarán muchas inserciones desordenadas. Cuando se necesita acceso rápido por índice numérico posicional. Cuando el rendimiento de inserción importa más que el orden (`std::unordered_set`).
+- **Cuándo es mala idea:** Cuando se quiere conservar el orden de inserción. Cuando se necesita acceso rápido por índice numérico posicional. Cuando el rendimiento de inserción importa más que el orden (`std::unordered_set`).
 
 
 # Tabla Comparativa Final
@@ -327,7 +327,7 @@ std::stack<int, std::vector<int>> miStackVector;
 
 **Último en entrar, primero en salir:** El último elemento agregado es el primero que se elimina.
 
-**Ejemplo:** una pila de platos. Los platos se apilan uno encima de otro, y se empieza lavando el que se encuentra más aariba, es decir, el que se puso de último.
+**Ejemplo:** una pila de platos. Los platos se apilan uno encima de otro, y se empieza lavando el que se encuentra más ariba, es decir, el que se puso de último.
 
 #### FIFO (First In, First Out)
 
@@ -517,7 +517,7 @@ Ambos devuelven un iterador, `begin()` devuelve un iterador que apunta al primer
 
 ### 3. ¿Por qué `std::sort` funciona con `vector` pero no con `list`? ¿Qué hace `list` en su lugar?
 
-`std::sort` requiere iteradores de acceso aleatorio (`LegacyRandomAccessIterator`) porque algoritmos eficientes como *Introsort* (la base de `std::sort`) necesitan saltar constantemente de un extremo a otro o al elemento medio en tiempo constante $O(1)$. Como `std::vector` almacena sus elementos en memoria contigua, lo permite; en cambio, un `std::list` está implementado como una lista doblemente enlazada con iteradores bidireccionales (`LegacyBidirectionalIterator`), por lo que avanzar $N$ posiciones toma tiempo lineal $O(N)$ y no se puede acceder directamente al elemento medio.
+`std::sort` requiere iteradores de acceso aleatorio (`LegacyRandomAccessIterator`) porque algoritmos eficientes como *Introsort* (la base de `std::sort`) necesitan iteradores de acceso aleatorio. Como `std::vector` almacena sus elementos en memoria contigua, lo permite; en cambio, un `std::list` está implementado como una lista doblemente enlazada con iteradores bidireccionales (`LegacyBidirectionalIterator`), por lo que avanzar $N$ posiciones toma tiempo lineal $O(N)$ y no se puede acceder directamente al elemento medio.
 * **¿Qué hace `list` en su lugar?:** `std::list` tiene su propia función optimizada para ordenar, `list::sort()`. Esta función reorganiza los nodos internamente reasignando los punteros de los enlaces (sin mover los datos de sitio) mediante un algoritmo de ordenamiento estable adecuado para listas (como *Merge Sort*).
 
 
@@ -535,18 +535,10 @@ Un iterador queda invalidado cuando se modifica la estructura del contenedor (a�
 
 ### 6. ¿Qué relación tiene el *for* de rango (`for (auto x : v)`) con `begin()` y `end()`? ¿Funcionaría con nuestra clase?
 
-* **Relación con `begin()` y `end()`:** El bucle de rango (introducido en C++11) es traducido por el compilador a un bucle tradicional utilizando los iteradores del contenedor. Para un contenedor `v`, el compilador expande el bucle de forma equivalente a:
-```cpp
-auto __begin = std::begin(v);
-auto __end = std::end(v);
-for (; __begin != __end; ++__begin) {
-    auto x = *__begin;
-    // cuerpo del bucle
-}
-```
+* **Relación con `begin()` y `end()`:** El bucle de rango (introducido en C++11) es traducido por el compilador a un bucle tradicional utilizando los iteradores del contenedor. 
+
 Por tanto, funcionaría siempre y cuando se implementen en la clase las funciones `begin()` y `end()`, y estas retornen objetos que cumplan con los requisitos mínimos de un iterador (`*`, `++` y `!=`).
 
----
 
 ### 7. Diferencia entre `iterator`, `const_iterator` y `reverse_iterator`
 
