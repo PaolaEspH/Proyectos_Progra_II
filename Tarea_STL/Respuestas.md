@@ -1,3 +1,8 @@
+---
+format: typst
+lang: es
+---
+
 # Tarea STL
 Paola Espinoza Hernández, Sebastián Miranda
 
@@ -24,6 +29,8 @@ Un contenedor es un objeto que puede guardar y administrar objetos de otros tipo
 #### 1. Funcionamiento Interno
 
 Utiliza un arreglo dinámico contiguo en memoria. Si el arreglo se llena, el contenedor asigna internamente un bloque de memoria contiguo más grande (usualmente duplicando la capacidad anterior), copia o mueve todos los elementos al nuevo bloque, libera el bloque viejo y añade el nuevo elemento.
+
+![Esquema de vector](diagramas/vector.png)
 
 #### 2. Funciones Principales
 
@@ -79,6 +86,8 @@ Un `deque` (double-ended queue) utiliza una estructura de bloques de memoria mú
 
 Mientras que `vector` almacena sus elementos en un único bloque de memoria contigua y crece de forma eficiente por el final, `deque` utiliza múltiples bloques de memoria discontinuos conectados por un arreglo de índices. Así, como para insertar en los extremos no necesita desplazar los elementos existentes en la memoria, sino que asigna o enlaza un nuevo bloque (o ranura) sin alterar la posición del resto de bloques de datos, puede insertar rápidamente tanto al inicio como al final.
 
+![Esquema de deque](diagramas/deque.png)
+
 #### 2. Funciones Principales
 
 1. `push_back(val)`: Inserta un elemento al final del deque.
@@ -130,6 +139,8 @@ Elemento en indice 2: 30
 Implementa una lista doblemente enlazada. Cada elemento (nodo) contiene el dato y dos punteros: uno que apunta al nodo siguiente y otro que apunta al nodo anterior.
 
 Dado que los nodos están enlazados mediante punteros, insertar o eliminar un elemento en medio requiere únicamente actualizar los punteros de los nodos adyacentes, sin necesidad de mover ningún otro elemento de memoria.
+
+![Esquema de list](diagramas/list.png)
 
 #### 2. Funciones Principales
 
@@ -188,6 +199,8 @@ Un arreglo estático de tamaño fijo envuelto en una clase de C++.El almacenamie
 
 Se diferencia de un arreglo tradicional porque soporta iteradores de la STL, y permite operaciones seguras como asignaciones directas entre objetos `array` completos (ej. `arr1 = arr2;`), conoce su propio tamaño mediante `.size()` y no decae implícitamente a un puntero (pointer decay al pasarlo a funciones).
 
+![Esquema de array](diagramas/array.png)
+
 #### 2. Funciones Principales
 
 1. `at(idx)`: Acceso verificado por límites al índice `idx`.
@@ -235,6 +248,8 @@ Elemento 0: 7, Elemento 2: 7
 Implementado típicamente como un árbol binario de búsqueda auto-balanceado. Almacena elementos únicos y ordenados según un criterio de ordenamiento interno.
 
 Al insertar nuevos elementos, se recorre la estructura y se inserta según sus reglas de comparación, de modo que los elementos siempre se mantienen ordenados. Además, si se intenta insertar un valor repetido, el `set` evita duplicarlo y no inserta ningún elemento. 
+
+![Esquema de set](diagramas/set.png)
 
 #### 2. Funciones Principales
 
@@ -288,15 +303,23 @@ Busqueda de 20: Encontrado
 - **Cuándo es mala idea:** Cuando se quiere conservar el orden de inserción. Cuando se necesita acceso rápido por índice numérico posicional. Cuando el rendimiento de inserción importa más que el orden (`std::unordered_set`).
 
 
+::: {.landscape}
+
 # Tabla Comparativa Final
 
+::: {style="font-size: 9pt"}
+
 | Contenedor | Estructura interna | Acceso por índice | Insertar al final | Insertar al inicio | Insertar en medio | Buscar un elemento |
-|------------|-------------------|-------------------|-------------------|-------------------|-------------------|-------------------|
+|--------|--------------------|-----------|-----------|-------------------|-----------------|--------------|
 | **vector** | Arreglo dinámico en memoria contigua; crece solo cuando se llena | Sí, con `v[i]` o `v.at(i)` | Sí, con `push_back(x)` | Sí, con `insert(v.begin(), x)`, pero tiene que correr todos los elementos; no existe `push_front` | Sí, con `insert(it, x)`; corre los elementos que están después | Sí, pero no tiene `find` propio; se usa `std::find` de `<algorithm>` |
 | **deque** | Bloques de memoria múltiples y separados, gestionados por un arreglo central | Sí, `dq[i]` o `dq.at(i)` | Sí, `push_back(x)` | Sí, `push_front(x)` | Sí, `insert(it, x)`, desplazando elementos hacia el bloque más cercano | Sí, `std::find` de `<algorithm>` |
 | **list** | Lista doblemente enlazada con nodos y punteros | No | Sí, con `push_back(x)` | Sí, `push_front(x)` | Sí, `insert(it, x)` | Sí, `std::find` o `remove` (para borrado por valor) |
 | **array** | Arreglo estático de tamaño fijo en memoria contigua | Sí, `arr[i]` o `arr.at(i)` | No | No | No | Sí, `std::find` de `<algorithm>` |
 | **set** | Árbol binario de búsqueda auto-balanceado (ej. Árbol rojo-negro) | No | No aplica (se inserta ordenado automáticamente) | No aplica (se inserta ordenado automáticamente) | No aplica (se inserta ordenado automáticamente) | Sí, `.find(x)` o `.count(x)` en tiempo `O(log N)` |
+
+:::
+
+:::
 
 ## Parte 3
 
@@ -583,15 +606,24 @@ std::cout << std::endl;
 
 ![Captura de salida](image.png)
 
+{{< pagebreak >}}
 
+## Fuentes
 
-cppreference.com. (s. f.). Containers library. cppreference.com. https://en.cppreference.com/cpp/container
-cppreference.com. (s. f.). Iterator library. cppreference.com. https://en.cppreference.com/cpp/iterator
-cppreference.com. (s. f.). std::stack. cppreference.com. https://en.cppreference.com/cpp/container/stack
-cppreference.com. (s. f.). std::queue. cppreference.com. https://en.cppreference.com/cpp/container/queue
-Weidl, J. (1996, abril 26). The standard template library tutorial. Information Systems Institute, Distributed Systems Department, Technical University Vienna. https://pages.di.unipi.it/corradini/Didattica/AP-24/DOCS/stl-tutorial-Weidl.pdf
+cppreference.com. (s. f.). Containers library. cppreference.com. <https://en.cppreference.com/cpp/container>
 
-Stepanov, A. (s. f.). Short History of STL. https://www.stepanovpapers.com/history%20of%20STL.pdf
-Musser, D. R., Derge, G. J. y Saini, A. (2001). STL Tutorial and Reference Guide: C++ Programming with the Standard Template Library (2.ª ed.). Addison-Wesley. https://www.informit.com/store/stl-tutorial-and-reference-guide-c-plus-plus-programming-9780201379235
-GNU Project. (s. f.). Headers. The GNU C++ Library Manual. https://gcc.gnu.org/onlinedocs/libstdc++/manual/using_headers.html
-Microsoft. (s. f.). Namespaces (C++). Microsoft Learn. https://learn.microsoft.com/en-us/cpp/cpp/namespaces-cpp
+cppreference.com. (s. f.). Iterator library. cppreference.com. <https://en.cppreference.com/cpp/iterator>
+
+cppreference.com. (s. f.). std::stack. cppreference.com. <https://en.cppreference.com/cpp/container/stack>
+
+cppreference.com. (s. f.). std::queue. cppreference.com. <https://en.cppreference.com/cpp/container/queue>
+
+Weidl, J. (1996, abril 26). The standard template library tutorial. Information Systems Institute, Distributed Systems Department, Technical University Vienna. <https://pages.di.unipi.it/corradini/Didattica/AP-24/DOCS/stl-tutorial-Weidl.pdf>
+
+Stepanov, A. (s. f.). Short History of STL. <https://www.stepanovpapers.com/history%20of%20STL.pdf>
+
+Musser, D. R., Derge, G. J. y Saini, A. (2001). STL Tutorial and Reference Guide: C++ Programming with the Standard Template Library (2.ª ed.). Addison-Wesley. <https://www.informit.com/store/stl-tutorial-and-reference-guide-c-plus-plus-programming-9780201379235>
+
+GNU Project. (s. f.). Headers. The GNU C++ Library Manual. <https://gcc.gnu.org/onlinedocs/libstdc++/manual/using_headers.html>
+
+Microsoft. (s. f.). Namespaces (C++). Microsoft Learn. <https://learn.microsoft.com/en-us/cpp/cpp/namespaces-cpp>

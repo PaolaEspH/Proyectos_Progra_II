@@ -14,6 +14,11 @@ int main() {
     cout << "Cantidad de numeros: ";
     cin >> n;
 
+    if (n <= 0) {
+        cout << "La cantidad debe ser mayor que cero.\n";
+        return 0;
+    }
+
     vector<int> numeros;
     set<int> numerosSet;
 
