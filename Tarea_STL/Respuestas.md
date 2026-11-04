@@ -585,5 +585,8 @@ std::cout << std::endl;
 
 
 
-
-https://pages.di.unipi.it/corradini/Didattica/AP-24/DOCS/stl-tutorial-Weidl.pdf
+cppreference.com. (s. f.). Containers library. cppreference.com. https://en.cppreference.com/cpp/container
+cppreference.com. (s. f.). Iterator library. cppreference.com. https://en.cppreference.com/cpp/iterator
+cppreference.com. (s. f.). std::stack. cppreference.com. https://en.cppreference.com/cpp/container/stack
+cppreference.com. (s. f.). std::queue. cppreference.com. https://en.cppreference.com/cpp/container/queue
+Weidl, J. (1996, abril 26). The standard template library tutorial. Information Systems Institute, Distributed Systems Department, Technical University Vienna. https://pages.di.unipi.it/corradini/Didattica/AP-24/DOCS/stl-tutorial-Weidl.pdf
