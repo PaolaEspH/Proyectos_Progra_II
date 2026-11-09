@@ -23,7 +23,7 @@ class ListaDoble{
             }
             delete m;
         }
-        void registrar(Nodo& nuevo){
+        void registrar(Nodo* nuevo){
             if(!espacio()){
                 std::cout << "Overflow" << std::endl;
                 return;
@@ -33,6 +33,7 @@ class ListaDoble{
                 return;
             }
             solicitudes++;
+            // actualizar atributos de nodo
             if(cabeza == nullptr){
                 cabeza = nuevo;
                 cola = nuevo;
@@ -42,27 +43,25 @@ class ListaDoble{
             cola->set_siguiente(nuevo);
             cola = cola->get_siguiente();
         }
-        class IteradorEspera{
+        class IteradorEstacionamiento{
             private:
                 Nodo* posactual;
             public:
-                IteradorEspera(Nodo* posicion){
+                IteradorEstacionamiento(Nodo* posicion){
                     posactual = posicion;
                 }
-                IteradorEspera& operator++(){
+                IteradorEstacionamiento& operator++(){
                     if(posactual != nullptr){ //Deja nullptr si es nullptr
                         posactual = posactual->get_siguiente();
                     }
                     return *this;
                 }
-                bool operator!=(const IteradorEspera& otro){
+                bool operator!=(const IteradorEstacionamiento& otro){
                     return posactual != otro.posactual;
                 }
-                bool operator==(const IteradorEspera& otro){
+                bool operator==(const IteradorEstacionamiento& otro){
                     return posactual == otro.posactual;
                 }
-                //Decidimos modificar el operador para que * devuelva nodo en vez de vehículo, pero también devolvemos vehículo mediante ->.
-                //Le pregunté al profe y dijo que estaba bien hacerlo así
                 Vehiculo* operator->(){
                     return &(posactual->get_dato());
                 }
@@ -73,15 +72,15 @@ class ListaDoble{
                     return posactual;
                 }
         };
-        IteradorEspera begin(){
-            return IteradorEspera(cabeza);
+        IteradorEstacionamiento begin(){
+            return IteradorEstacionamiento(cabeza);
         }
-        IteradorEspera end(){
-            return IteradorEspera(nullptr);
+        IteradorEstacionamiento end(){
+            return IteradorEstacionamiento(nullptr);
         }
         void mostrar(){
             int i = 0;
-            for(IteradorEspera it = begin(); it != end(); ++it, i++){
+            for(IteradorEstacionamiento it = begin(); it != end(); ++it, i++){
                 std::cout << *it << "--------------------------------" << std::endl;
             }
             std::cout << "Total de solicitudes pendientes: " << i << std::endl;
@@ -96,45 +95,39 @@ class ListaDoble{
             }
         }
         Nodo* buscar(std::string placa){
-            for(IteradorEspera it = begin(); it != end(); ++it){
+            for(IteradorEstacionamiento it = begin(); it != end(); ++it){
                 if((it)->get_placa() == placa){
                     return it.get_nodo();
                 };
             }
             return nullptr;
         }
-        void cancelar(std::string placa){
-            Nodo* anterior = nullptr;
-            IteradorEspera b = begin();
-            ++b;
-            for(IteradorEspera it = begin(); it != end(); ++it, ++b){
+        void abandonar(std::string placa){
+            for(IteradorEstacionamiento it = begin(); it != end(); ++it){
                 if(it->get_placa() == placa){
                     Nodo* eliminar = it.get_nodo();
-                    if(anterior == nullptr){
-                        cabeza = cabeza->get_siguiente();
+                    it.get_nodo()->get_anterior()->set_siguiente(it.get_nodo()->get_siguiente());
+                    if(it.get_nodo() == cabeza){
+                        cabeza = it.get_nodo()->get_siguiente();
                     }
-                    else{
-                        anterior->set_siguiente(b.get_nodo());
-                    }
-                    if(b == end()){
-                        cola = anterior;
+                    if(it.get_nodo() == cola){
+                        cola = it.get_nodo()->get_anterior();
                     }
                     delete eliminar;
                     return;
                 }
-                anterior = it.get_nodo();
             }
         }
-        int pendientes(){
+        int estacionados(){
             int c = 0;
-            for(IteradorEspera it = begin(); it != end(); ++it){
+            for(IteradorEstacionamiento it = begin(); it != end(); ++it){
                 c++;
             }
             return c;
         }
         int cantidad(int tipo){
             int c = 0;
-            for(IteradorEspera it = begin(); it != end(); ++it){
+            for(IteradorEstacionamiento it = begin(); it != end(); ++it){
                 if(it->get_tipo() == tipo){
                     c++;
                 };
