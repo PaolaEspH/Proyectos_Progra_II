@@ -2,15 +2,18 @@
 #define LISTA_ENLAZADA_HPP
 
 #include "nodo.hpp"
+#include "lista_doble.hpp"
 
 class ListaEnlazada{
     private:
         Nodo* cabeza;
         Nodo* cola;
         int solicitudes;
+        ListaDoble* estacionamiento;
     public:
-        ListaEnlazada();
+        ListaEnlazada(ListaDoble* est): estacionamiento(est) {};
         void registrar(std::string placa, std::string propietario, int tipo);
+        void procesar();
 
         class IteradorEspera{
             private:

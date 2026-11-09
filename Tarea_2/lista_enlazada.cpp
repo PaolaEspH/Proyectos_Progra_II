@@ -128,3 +128,9 @@ int ListaEnlazada::cantidad(int tipo){
     }
     return c;
 }
+
+void ListaEnlazada::procesar(){
+    // Paso la dirección de memoria, la otra se la deja, y no la elimino: falta try catch por si no funciona no quitarla de aquí
+    estacionamiento->registrar(cabeza);
+    cabeza = cabeza->get_siguiente();
+}
