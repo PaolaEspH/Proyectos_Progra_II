@@ -1,6 +1,6 @@
-// Pruebas automatizadas de la lista simple, la lista doble y la matriz
-// Compilar: g++ -std=c++11 pruebas.cpp lista_enlazada.cpp lista_doble.cpp matriz.cpp nodo.cpp nodo_doble.cpp estacionado.cpp vehiculo.cpp -o pruebas
 #include <cassert>
+#include <stdexcept>
+#include <string>
 #include "lista_enlazada.hpp"
 #include "lista_doble.hpp"
 #include "matriz.hpp"
