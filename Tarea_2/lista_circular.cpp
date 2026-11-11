@@ -108,3 +108,73 @@ bool ListaCircular::vacia() const {
 int ListaCircular::get_cantidad() const {
     return cantidad;
 }
+
+Encargado* ListaCircular::buscar(string id) {
+    for (IteradorCircular it = begin(); it != end(); ++it) {
+        if (it->get_id() == id) {
+            return &(*it);
+        }
+    }
+    return nullptr;
+}
+
+ListaCircular::IteradorCircular::IteradorCircular(NodoEncargado* posicion, int restantes)
+    : posactual(posicion), restantes(restantes) {}
+
+ListaCircular::IteradorCircular& ListaCircular::IteradorCircular::operator++() {
+    if (restantes > 0) {
+        restantes--;
+        if (restantes <= 1) {
+            restantes = 0;
+            posactual = nullptr;
+        } else {
+            posactual = posactual->get_siguiente();
+        }
+    }
+    return *this;
+}
+
+bool ListaCircular::IteradorCircular::operator==(const IteradorCircular& otro) {
+    return posactual == otro.posactual && restantes == otro.restantes;
+}
+
+bool ListaCircular::IteradorCircular::operator!=(const IteradorCircular& otro) {
+    return !(*this == otro);
+}
+
+Encargado& ListaCircular::IteradorCircular::operator*() {
+    return posactual->get_dato();
+}
+
+Encargado* ListaCircular::IteradorCircular::operator->() {
+    return &posactual->get_dato();
+}
+
+ListaCircular::IteradorCircular ListaCircular::begin() {
+    return IteradorCircular(cabeza, cantidad);
+}
+
+ListaCircular::IteradorCircular ListaCircular::end() {
+    return IteradorCircular(nullptr, 0);
+}
+
+void ListaCircular::mostrar() {
+    if (vacia()) {
+        cout << "No hay encargados registrados." << endl;
+        return;
+    }
+    for (IteradorCircular it = begin(); it != end(); ++it) {
+        cout << *it << endl;
+    }
+}
+
+void ListaCircular::mostrar_rotacion() {
+    if (vacia()) {
+        cout << "No hay encargados registrados." << endl;
+        return;
+    }
+    for (IteradorCircular it = begin(); it != end(); ++it) {
+        cout << it->get_nombre() << " -> ";
+    }
+    cout << cabeza->get_dato().get_nombre() << endl;
+}
