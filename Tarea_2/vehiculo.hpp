@@ -1,5 +1,9 @@
+#ifndef VEHICULO_HPP
+#define VEHICULO_HPP
+
 #include <iostream>
 #include <string>
+
 class Vehiculo{
     private:
         std::string placa;
@@ -12,4 +16,8 @@ class Vehiculo{
         int get_num() const;
         std::string get_placa() const;
         std::string get_propietario() const;
-    };
+        std::string texto_tipo() const;
+        friend std::ostream& operator<<(std::ostream& s, const Vehiculo& v);
+};
+
+#endif
