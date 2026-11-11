@@ -6,13 +6,27 @@ ListaEnlazada::ListaEnlazada(){
     solicitudes = 0;
 }
 
-void ListaEnlazada::registrar(std::string placa, std::string propietario, int tipo){
-    if(buscar(placa)){
-        std::cout << "La placa ya se encuentra registrada" << std::endl;
-        return;
+ListaEnlazada::~ListaEnlazada(){
+    Nodo* actual = cabeza;
+    while(actual != nullptr){
+        Nodo* sig = actual->get_siguiente();
+        delete actual;
+        actual = sig;
     }
+}
+
+void ListaEnlazada::registrar(std::string placa, std::string propietario, int tipo){
+    if(placa.empty() || propietario.empty()){
+        throw std::invalid_argument("La placa y el propietario no pueden estar vacíos.");
+    }
+    if(tipo != 0 && tipo != 1){
+        throw std::invalid_argument("El tipo de vehículo no es válido.");
+    }
+    if(buscar(placa)){
+        throw std::logic_error("La placa ya está registrada.");
+    }
+    solicitudes++; // La primera solicitud es la 1
     Nodo* nuevo = new Nodo(Vehiculo(placa, propietario, tipo, solicitudes));
-    solicitudes++;
     if(cabeza == nullptr){
         cabeza = nuevo;
         cola = nuevo;
@@ -20,6 +34,27 @@ void ListaEnlazada::registrar(std::string placa, std::string propietario, int ti
     }
     cola->set_siguiente(nuevo);
     cola = cola->get_siguiente();
+}
+
+// Consulta la primera solicitud sin retirarla
+Vehiculo& ListaEnlazada::primera(){
+    if(cabeza == nullptr){
+        throw std::underflow_error("No hay solicitudes pendientes.");
+    }
+    return cabeza->get_dato();
+}
+
+// Retira la primera solicitud (el Sistema la llama solo cuando el ingreso ya se completó)
+void ListaEnlazada::procesar(){
+    if(cabeza == nullptr){
+        throw std::underflow_error("No hay solicitudes pendientes.");
+    }
+    Nodo* eliminar = cabeza;
+    cabeza = cabeza->get_siguiente();
+    if(cabeza == nullptr){
+        cola = nullptr;
+    }
+    delete eliminar;
 }
 
 ListaEnlazada::IteradorEspera::IteradorEspera(Nodo* posicion){
@@ -62,6 +97,10 @@ ListaEnlazada::IteradorEspera ListaEnlazada::end(){
 }
 
 void ListaEnlazada::mostrar(){
+    if(begin() == end()){
+        std::cout << "No existen solicitudes pendientes." << std::endl;
+        return;
+    }
     int i = 0;
     for(IteradorEspera it = begin(); it != end(); ++it, i++){
         std::cout << *it << "--------------------------------" << std::endl;
@@ -70,20 +109,18 @@ void ListaEnlazada::mostrar(){
 }
 
 void ListaEnlazada::consultar(std::string placa){
-    Nodo* vehiculo = buscar(placa);
-    if(vehiculo){
-        std::cout << *vehiculo;
+    Vehiculo* vehiculo = buscar(placa);
+    if(vehiculo == nullptr){
+        throw std::out_of_range("Solicitud no encontrada.");
     }
-    else{
-        std::cout << "Vehículo no encontrado" << std::endl;
-    }
+    std::cout << *vehiculo;
 }
 
-Nodo* ListaEnlazada::buscar(std::string placa){
+Vehiculo* ListaEnlazada::buscar(std::string placa){
     for(IteradorEspera it = begin(); it != end(); ++it){
-        if((it)->get_placa() == placa){
-            return it.get_nodo();
-        };
+        if(it->get_placa() == placa){
+            return &(*it);
+        }
     }
     return nullptr;
 }
@@ -109,6 +146,7 @@ void ListaEnlazada::cancelar(std::string placa){
         }
         anterior = it.get_nodo();
     }
+    throw std::out_of_range("Solicitud no encontrada.");
 }
 
 int ListaEnlazada::pendientes(){
@@ -124,13 +162,7 @@ int ListaEnlazada::cantidad(int tipo){
     for(IteradorEspera it = begin(); it != end(); ++it){
         if(it->get_tipo() == tipo){
             c++;
-        };
+        }
     }
     return c;
-}
-
-void ListaEnlazada::procesar(){
-    // Paso la dirección de memoria, la otra se la deja, y no la elimino: falta try catch por si no funciona no quitarla de aquí
-    estacionamiento->registrar(cabeza);
-    cabeza = cabeza->get_siguiente();
 }
