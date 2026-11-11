@@ -1,22 +1,25 @@
-#include "lista_enlazada.hpp"
+#include "sistema.hpp"
 
 int main(){
-    ListaEnlazada list;
-    list.mostrar();
-    list.registrar("23", "1", 1);
-    list.registrar("26", "2", 0);
-    list.registrar("78", "3", 1);
-    list.mostrar();
-    list.consultar("26");
-    list.consultar("ZZZ999");
-    list.cancelar("78");
-    list.mostrar();
-    list.registrar("78", "8", 0);
-    list.registrar("26", "4", 0);
-    list.registrar("PA56", "5", 1);
-    list.cancelar("23");
-    list.mostrar();
-    std::cout << "Cantidad de automóviles: " << list.cantidad(0) << std::endl;
-    std::cout << "Cantidad de motocicletas: " << list.cantidad(1) << std::endl;
-    std::cout << "Solicitudes pendientes: " << list.pendientes() << std::endl;
+    std::cout << "CONFIGURACIÓN INICIAL" << std::endl;
+    Sistema* sistema = nullptr;
+    while(sistema == nullptr){
+        int filas = Sistema::leer_entero("Ingrese cantidad de filas: ");
+        int columnas = Sistema::leer_entero("Ingrese cantidad de columnas: ");
+        if(std::cin.eof()){
+            return 0;
+        }
+        try{
+            sistema = new Sistema(filas, columnas);
+            std::cout << "Estacionamiento creado correctamente." << std::endl;
+            std::cout << "Espacios disponibles: " << filas * columnas << std::endl;
+        }
+        catch(const std::invalid_argument& e){
+            std::cout << "Error (invalid_argument): " << e.what() << std::endl;
+        }
+    }
+    sistema->menu();
+    delete sistema;
+    std::cout << "Memoria liberada. Programa finalizado." << std::endl;
+    return 0;
 }
