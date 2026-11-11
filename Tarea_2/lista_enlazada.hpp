@@ -1,18 +1,21 @@
 #ifndef LISTA_ENLAZADA_HPP
 #define LISTA_ENLAZADA_HPP
 
+#include <stdexcept>
 #include "nodo.hpp"
-#include "lista_doble.hpp"
 
 class ListaEnlazada{
     private:
         Nodo* cabeza;
         Nodo* cola;
-        int solicitudes;
-        ListaDoble* estacionamiento;
+        int solicitudes; //Es num de solicitudes hechas en el día, no contempla canceladas ni resueltas
     public:
-        ListaEnlazada(ListaDoble* est): estacionamiento(est) {};
+        ListaEnlazada();
+        ~ListaEnlazada();
+        ListaEnlazada(const ListaEnlazada& otra) = delete; // Se prohíbe la copia (evita copia superficial)
+        ListaEnlazada& operator=(const ListaEnlazada& otra) = delete;
         void registrar(std::string placa, std::string propietario, int tipo);
+        Vehiculo& primera();
         void procesar();
 
         class IteradorEspera{
@@ -32,7 +35,7 @@ class ListaEnlazada{
         IteradorEspera end();
         void mostrar();
         void consultar(std::string placa);
-        Nodo* buscar(std::string placa);
+        Vehiculo* buscar(std::string placa);
         void cancelar(std::string placa);
         int pendientes();
         int cantidad(int tipo);
