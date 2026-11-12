@@ -91,6 +91,7 @@ string ListaCircular::asignar() {
     Encargado& encargado = siguiente();
     string id = encargado.get_id();
     encargado.atender();
+    avanzar();
     return id;
 }
 
@@ -124,8 +125,7 @@ ListaCircular::IteradorCircular::IteradorCircular(NodoEncargado* posicion, int r
 ListaCircular::IteradorCircular& ListaCircular::IteradorCircular::operator++() {
     if (restantes > 0) {
         restantes--;
-        if (restantes <= 1) {
-            restantes = 0;
+        if (restantes == 0) {
             posactual = nullptr;
         } else {
             posactual = posactual->get_siguiente();
