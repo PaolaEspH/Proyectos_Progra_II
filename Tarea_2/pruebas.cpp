@@ -2,9 +2,12 @@
 #include <iostream>
 #include <stdexcept>
 #include <string>
+#include "lista_circular.hpp"
 #include "lista_enlazada.hpp"
 #include "lista_doble.hpp"
 #include "matriz.hpp"
+
+using namespace std;
 
 std::string placas_espera(ListaEnlazada& lista){
     std::string texto = "";
@@ -207,6 +210,45 @@ void prueba_matriz_llena(){
     assert(f == 0 && c == 0);
 }
 
+bool prueba_rotacion_encargados() {
+    ListaCircular lista;
+    lista.registrar("E01", "Ana");
+    lista.registrar("E02", "Luis");
+    lista.registrar("E03", "Maria");
+
+    Encargado& ana = lista.siguiente();
+    lista.asignar();
+    lista.asignar();
+    lista.asignar();
+    string id = lista.asignar();
+    if (id != "E01" || ana.get_atendidos() != 2 || lista.siguiente().get_id() != "E02") {
+        cout << "Falló la prueba de rotación de encargados." << endl;
+        return false;
+    }
+    return true;
+}
+
+bool prueba_eliminar_encargados() {
+    ListaCircular lista;
+    lista.registrar("E01", "Ana");
+    lista.registrar("E02", "Luis");
+    lista.registrar("E03", "Maria");
+
+    lista.avanzar();
+    lista.eliminar("E02");
+    if (lista.siguiente().get_id() != "E03" || lista.get_cantidad() != 2) {
+        cout << "Falló la prueba al eliminar al encargado en turno." << endl;
+        return false;
+    }
+
+    lista.avanzar();
+    if (lista.siguiente().get_id() != "E01") {
+        cout << "Falló la rotación después de eliminar al encargado." << endl;
+        return false;
+    }
+    return true;
+}
+
 int main(){
     prueba_registrar_solicitud();
     prueba_cancelar_primera();
@@ -218,6 +260,12 @@ int main(){
     prueba_eliminar_doble();
     prueba_matriz_validaciones();
     prueba_matriz_llena();
-    std::cout << "Las 10 pruebas pasaron correctamente." << std::endl;
+    if (!prueba_rotacion_encargados()) {
+        return 1;
+    }
+    if (!prueba_eliminar_encargados()) {
+        return 1;
+    }
+    cout << "Las 12 pruebas pasaron correctamente." << endl;
     return 0;
 }
