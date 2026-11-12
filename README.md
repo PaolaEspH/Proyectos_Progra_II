@@ -8,6 +8,32 @@ Repositorio en GitHub: https://github.com/PaolaEspH/Proyectos_Progra_II
 - Sebastian Miranda Ramirez C4H274
 - Paola Espinoza Hernández
 
+# Tarea 2. Administración de un estacionamiento
+
+El programa permite registrar solicitudes de ingreso, asignar un espacio y un encargado a cada vehículo y cobrar al registrar la salida. Desde el menú también se pueden consultar los vehículos estacionados, los espacios libres y la recaudación.
+
+## Compilación y ejecución
+
+Desde la carpeta `Tarea_2`, ejecutar en PowerShell con `g++` instalado.
+
+### Estacionamiento
+
+```powershell
+g++ main.cpp sistema.cpp matriz.cpp lista_enlazada.cpp lista_doble.cpp lista_circular.cpp nodo.cpp nodo_doble.cpp vehiculo.cpp estacionado.cpp encargado.cpp -o estacionamiento.exe
+.\estacionamiento.exe
+```
+
+### Pruebas
+
+```powershell
+g++ pruebas.cpp matriz.cpp lista_enlazada.cpp lista_doble.cpp lista_circular.cpp nodo.cpp nodo_doble.cpp vehiculo.cpp estacionado.cpp encargado.cpp -o pruebas.exe
+.\pruebas.exe
+```
+
+Se compilan por separado porque cada uno tiene su propio `main()`.
+
+[Informe de la Tarea 2](Tarea_2/docs/Documento_tecnico.md)
+
 # Tarea 1: centro de control de satélites
 
 Como primera tarea, el repositorio contiene un programa que permite, desde consola, registrar satélites, órbitas y estaciones terrestres, simular transmisiones y llevar el control de telemetría y energía.
